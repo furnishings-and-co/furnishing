@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 
-async function createProduct({ name, description, price, picture }) {
+async function createProduct({ name, description, price, picture, category }) {
   try {
     const client = new Client({
       connectionString: 'your_postgresql_connection_string',
@@ -8,8 +8,8 @@ async function createProduct({ name, description, price, picture }) {
 
     await client.connect();
 
-    const query = 'INSERT INTO products (name, description, price, picture) VALUES ($1, $2, $3, $4) RETURNING *';
-    const values = [name, description, price, picture];
+    const query = 'INSERT INTO products (name, description, price, picture, category) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+    const values = [name, description, price, picture, category];
 
     const result = await client.query(query, values);
     const createdProduct = result.rows[0];
@@ -69,8 +69,8 @@ async function addProductToCart(userId, productId) {
       rows: [selectedItem],
     } = await client.query(
       `
-      INSERT INTO purchased_items ("userId", "productId", name, price, description, picture)
-      SELECT $1, $2, name, price, description, picture
+      INSERT INTO purchased_items ("userId", "productId", name, price, description, picture, category)
+      SELECT $1, $2, name, price, description, picture, category
       FROM products
       WHERE id = $2
       RETURNING *;

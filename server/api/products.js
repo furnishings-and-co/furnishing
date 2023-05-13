@@ -1,6 +1,5 @@
 const express = require('express');
 const {
-    createProduct,
     getAllProducts,
     getProductsById,
     getProductsByCategory,
@@ -20,14 +19,24 @@ productRouter.get("/", async (req, res, next) => {
     }
   });
 
-productsRouter.get("/:productsId/routines", async (req, res, next) => {
-    const { productsId } = req.params;
+productRouter.get("/:productsId/routines", async (req, res, next) => {
+    const { category } = req.params;
   
     try {
-      const productCategory = await getproductsByCategory(category);
-    //   const routines = await getPublicRoutinesByproducts({ id: productsId });
+      const productCategory = await getProductsByCategory(category);
   
       res.send(productCategory);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  productRouter.get("/:productId", async (req, res, next) => {
+    const { productId } = req.params;
+  
+    try {
+      const getSingleProduct = await getProductsById(productId);
+      res.send(getSingleProduct);
     } catch (error) {
       next(error);
     }

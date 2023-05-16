@@ -37,14 +37,12 @@ async function createTables() {
         );
         CREATE TABLE purchased_items (
           id SERIAL PRIMARY KEY,
-          user_id INT,
-          product_id INT,
           name VARCHAR(255)	UNIQUE NOT NULL,
           price DECIMAL(10, 2),
           description	TEXT	NOT NULL,
           picture TEXT NOT NULL,
-          FOREIGN KEY (user_id) REFERENCES users(id),
-          FOREIGN KEY (product_id) REFERENCES products(id)
+          "userId"	INTEGER	REFERENCES users ( id ),
+        "productId"	INTEGER	REFERENCES products ( id ),
         );
    
     `);

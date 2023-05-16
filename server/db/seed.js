@@ -35,13 +35,13 @@ async function createTables() {
         description	TEXT	NOT NULL,
         picture TEXT NOT NULL
         );
-        CREATE TABLE purchased_items (
-          id SERIAL PRIMARY KEY,
-          name VARCHAR(255)	UNIQUE NOT NULL,
-          price DECIMAL(10, 2),
-          description	TEXT	NOT NULL,
-          picture TEXT NOT NULL,
-          "userId"	INTEGER	REFERENCES users ( id ),
+      CREATE TABLE purchased_items (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255)	UNIQUE NOT NULL,
+        price DECIMAL(10, 2),
+        description	TEXT	NOT NULL,
+        picture TEXT NOT NULL,
+        "userId"	INTEGER	REFERENCES users ( id ),
         "productId"	INTEGER	REFERENCES products ( id ),
         );
    

@@ -1,5 +1,6 @@
 const client = require('./client');
 const { createProduct } = require('./products');
+const { createUser } = require('./users');
 
 const dropTables = async () => {
   try {
@@ -17,34 +18,34 @@ const dropTables = async () => {
 };
 
 async function createTables() {
-  console.log("Starting to build tables...");
   // create all tables, in the correct order
   try {
     console.log("Starting to build tables...");
 
     await client.query(`
       CREATE TABLE users (
-        id	SERIAL	PRIMARY KEY,
-        email	VARCHAR(255)	UNIQUE NOT NULL,
-        password	VARCHAR(255)	NOT NULL
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        "isAdmin" BOOLEAN DEFAULT FALSE
       );
       CREATE TABLE products (
-        id	SERIAL	PRIMARY KEY,
-        name VARCHAR(255)	UNIQUE NOT NULL,
-        price DECIMAL	NOT NULL,
-        description	TEXT	NOT NULL,
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) UNIQUE NOT NULL,
+        price DECIMAL NOT NULL,
+        description TEXT NOT NULL,
+        category VARCHAR(255) NOT NULL,
         picture TEXT NOT NULL
-        );
+      );
       CREATE TABLE purchased_items (
         id SERIAL PRIMARY KEY,
-        name VARCHAR(255)	UNIQUE NOT NULL,
+        name VARCHAR(255) UNIQUE NOT NULL,
         price DECIMAL(10, 2),
-        description	TEXT	NOT NULL,
+        description TEXT NOT NULL,
         picture TEXT NOT NULL,
-        "userId"	INTEGER	REFERENCES users ( id ),
-        "productId"	INTEGER	REFERENCES products ( id ),
-        );
-   
+        "userId" INTEGER REFERENCES users (id),
+        "productId" INTEGER REFERENCES products (id)
+      );
     `);
 
     console.log("Finished building tables!");
@@ -58,9 +59,10 @@ async function createInitialUsers() {
   console.log("Starting to create users...")
   try {
     const usersToCreate = [
-      { username: "albert", password: "bertie99" },
-      { username: "sandra", password: "sandra123" },
-      { username: "glamgal", password: "glamgal123" },
+      { username: "albert", password: "bertie99", isAdmin: false },
+      { username: "sandra", password: "sandra123", isAdmin: false },
+      { username: "glamgal", password: "glamgal123", isAdmin: false },
+      { username: "admin", password: "admin123", isAdmin: true }
     ]
     const users = await Promise.all(usersToCreate.map(createUser))
 
@@ -72,6 +74,7 @@ async function createInitialUsers() {
     throw error
   }
 }
+
 async function createInitialProducts() {
   try {
     console.log("Starting to create products...")
@@ -107,9 +110,13 @@ async function createInitialProducts() {
 const rebuildDB = async () => {
   try {
     await dropTables();
+    console.log("dropped tables")
     await createTables();
+    console.log("created tables")
     await createInitialUsers();
+    console.log("createdUsers tables")
     await createInitialProducts();
+    console.log("createdProducts tables")
   } catch (error) {
     console.error('Error during rebuildDB', error);
     throw error;

@@ -2,13 +2,16 @@ import { useState } from 'react'
 import './App.css'
 import { RRoutes } from './components/Routes'
 import { Route, Routes } from 'react-router-dom'
+import NavBar from './components/NavBar';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [user, setUser] = useState({});
 
   return (
     <div className="App">
-      <RRoutes count={count} setCount={setCount}/>
+      <NavBar token={token} setToken={setToken} setUser={setUser} user={user}/>
+      <RRoutes token={token} setToken={setToken} setUser={setUser} user={user}/>
     </div>
   )
 }

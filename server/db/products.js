@@ -1,12 +1,8 @@
-const { Client } = require('pg');
-const pkg = require('../../package.json');
-const { DATABASE_URL } = process.env;
+const client = require('./client')
+
 
 async function createProduct({ name, description, price, picture, category }) {
   try {
-    const client = new Client({
-      connectionString: `postgres://localhost:5432/${pkg.name}`,
-    });
 
     await client.connect();
 
@@ -16,7 +12,7 @@ async function createProduct({ name, description, price, picture, category }) {
     const result = await client.query(query, values);
     const createdProduct = result.rows[0];
 
-    await client.end();
+    
 
     console.log('Product created:', createdProduct);
     return createdProduct;
@@ -27,14 +23,14 @@ async function createProduct({ name, description, price, picture, category }) {
 }
 
 async function getAllProducts(){
-  
   try {
-    const { rows: products } = await client.query(`
+    const { rows } = await client.query(`
       SELECT * FROM products
     `);
-    return products;
+console.log(client);
+    return rows;
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 }
 
@@ -46,7 +42,7 @@ async function getProductsById(id){
       WHERE id = $1
       `, [id]
       );
-      return product;
+      return products;
     } catch (error) {
       throw error;
   }

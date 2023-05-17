@@ -1,0 +1,36 @@
+.Navbar {
+    background-color: #e5e5e5;
+    width: 80%;
+    height: 2%;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    position: sticky;
+    z-index: 9999;
+  }
+  .logo {
+    background-color: #896d50;
+    font-family: "Pathway Gothic One", Arial, sans-serif !important;
+    color: white;
+    line-height: 3rem;
+    letter-spacing: 1px;
+    padding: 0px 10px;
+    font-size: 30px;
+  }
+  
+  .Links{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+  .Navbar a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #141414;
+    position: relative;
+    font-family: "Pathway Gothic One", Arial, sans-serif !important;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0px 30px;
+  }

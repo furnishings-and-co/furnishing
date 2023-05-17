@@ -11,7 +11,7 @@ router.get('/health', async (req, res, next) => {
 const usersRouter = require('./users');
 router.use('/users', usersRouter);
 
-// ROUTER: /api/activities
+// ROUTER: /api/products
 const productRouter = require('./products');
 router.use('/products', productRouter);
 

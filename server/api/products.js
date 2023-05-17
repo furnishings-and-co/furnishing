@@ -19,7 +19,7 @@ productRouter.get("/", async (req, res, next) => {
     }
   });
 
-productRouter.get("/:productsId/routines", async (req, res, next) => {
+productRouter.get("/products/category", async (req, res, next) => {
     const { category } = req.params;
   
     try {

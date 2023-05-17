@@ -81,13 +81,16 @@ async function createInitialProducts() {
         name: "Grey Forest",
         description: "Wooden grey chair.",
         price: 227.24,
-        picture: "/img/chair1.webp"
+        picture: "/img/chair1.webp",
+        category: "chair"
+
       },
       {
         name: "Dinning Chair",
         description: "White chair with black legs.",
         price: 334.94,
-        picture: "/img/chair2.jpg"
+        picture: "/img/chair2.jpg",
+        category: "chair"
       },
     ]
     const products = await Promise.all(productsToCreate.map(createProduct))

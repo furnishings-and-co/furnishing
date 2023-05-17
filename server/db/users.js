@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const SALT_COUNT = 10;
 
-async function createUser({ username, password, email, isAdmin = false }) {
+async function createUser({ username, password, isAdmin = false }) {
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
 
   try {
@@ -11,12 +11,12 @@ async function createUser({ username, password, email, isAdmin = false }) {
       rows: [user],
     } = await client.query(
       `
-    INSERT INTO users(username, password, email, "isAdmin") 
-    VALUES ($1, $2, $3, $4)
-    ON CONFLICT (username, email) DO NOTHING 
-    RETURNING id, username, email;
+    INSERT INTO users(username, password, "isAdmin") 
+    VALUES ($1, $2, $3)
+    ON CONFLICT (username) DO NOTHING 
+    RETURNING id, username;
     `,
-      [username, hashedPassword, email, isAdmin]
+      [username, hashedPassword, isAdmin]
     );
     return user;
   } catch (error) {
@@ -48,7 +48,7 @@ async function getUser({ username, password }) {
 async function getUserById(userId) {
   try {
     const {rows: [user]} = await client.query(`
-    SELECT id, username, email, "isAdmin"
+    SELECT id, username, "isAdmin"
     FROM users
     WHERE id = $1;
     `, [userId]);
@@ -66,7 +66,7 @@ async function getUserByUsername(userName) {
       rows: [user],
     } = await client.query(
       `
-    SELECT id, username, password, email
+    SELECT id, username, password
     FROM users
     WHERE username = $1;
     `,

@@ -1,4 +1,4 @@
-const BASE_URL= "https://localhost8080/api"
+const BASE_URL= "https://localhost:8080/api"
 
 
 export async function DisplayProducts() {

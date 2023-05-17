@@ -8,3 +8,5 @@ const connectionString =
 const client = new Pool({ connectionString });
 
 module.exports = client;
+
+

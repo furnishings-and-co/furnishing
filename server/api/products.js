@@ -9,9 +9,11 @@ const productRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = process.env 
 
+// api/products
 productRouter.get("/", async (req, res, next) => {
     try {
       const products = await getAllProducts();
+      console.log(products);
       res.send(products);
     } catch (error) {
       console.log(error);
@@ -19,7 +21,7 @@ productRouter.get("/", async (req, res, next) => {
     }
   });
 
-productRouter.get("/products/category", async (req, res, next) => {
+productRouter.get("/category", async (req, res, next) => {
     const { category } = req.params;
   
     try {
@@ -41,3 +43,5 @@ productRouter.get("/products/category", async (req, res, next) => {
       next(error);
     }
   });
+
+module.exports = productRouter;

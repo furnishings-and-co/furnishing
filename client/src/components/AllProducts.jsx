@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {DisplayProducts} from '../api/products'
 import { useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
-// import "../Styles/Update.css";
+import "../styles/Products.css"
 // import { ToastContainer } from 'react-toastify';
 
 
@@ -18,7 +18,6 @@ const AllProducts = () => {
     }
     getProducts();
   }, [])
-  console.log(products)
 
 
   return (
@@ -27,12 +26,10 @@ const AllProducts = () => {
       {products.map((product) => {
         return (
           <div key={product.id}>
-            <p>Name: {product.name}</p>
+            <p>{product.name}</p>
             <p>Description: {product.description}</p>
-            <p>Price: {product.price}</p>
-            <p>Category: {product.category}</p>
+            <p>${product.price}</p>
             <img style={{ height: "400px", }} src={product.picture} alt="" />
-            
           </div>
         );
       })}

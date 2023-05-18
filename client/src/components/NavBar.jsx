@@ -5,13 +5,13 @@ import "../styles/NavBar.css"
 const NavBar = () => {
     return (
         <div className='Navbar'>
-            <h3 className='logo'>Furnishings & Co</h3>
+            <img className="logo" src="./img/logo.png" />
             <ul className='Links'>
-                <Link to="/" >Home</Link>
-                <Link to="/products">Shop</Link>
-                {/* <Link to="/cart">Cart</Link>
-                <Link to="/profile">Profile</Link> */}
-                <Link to="/login">Login</Link>
+                <Link className='Link' to="/" >Home</Link>
+                <Link className='Link' to="/products">Shop</Link>
+                <Link className='Link' to="/cart">Cart</Link>
+                <Link className='Link' to="/profile">Profile</Link>
+                <Link className='Link' to="/login">Login</Link>
             </ul>
 
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DisplayProducts } from '../api/products';
+import {DisplayProducts} from '../api/products'
 import { useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import "../Styles/Update.css";

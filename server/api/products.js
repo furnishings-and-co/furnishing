@@ -21,12 +21,12 @@ productRouter.get("/", async (req, res, next) => {
     }
   });
 
-productRouter.get("/category", async (req, res, next) => {
+productRouter.get("/:category", async (req, res, next) => {
     const { category } = req.params;
-  
+   console.log (category)
     try {
       const productCategory = await getProductsByCategory(category);
-  
+  console.log(productCategory)
       res.send(productCategory);
     } catch (error) {
       next(error);

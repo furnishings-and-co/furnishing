@@ -2,7 +2,8 @@ const BASE_URL= "https://localhost:8080/api"
 
 
 export async function DisplayProducts() {
-    try {
+  console.log("Nope")
+  try {
       const response = await fetch(`${BASE_URL}/products`, {
         headers: {
           "Content-Type": "application/json",
@@ -10,7 +11,8 @@ export async function DisplayProducts() {
       });
   
       const result = await response.json();
-  
+      console.log("hello")
+      console.log(result)
       return result;
     } catch (err) {
       console.error(err);

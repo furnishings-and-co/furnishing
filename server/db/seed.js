@@ -95,6 +95,13 @@ async function createInitialProducts() {
         picture: "/img/chair2.jpg",
         category: "chair"
       },
+      {
+        name: "Grey Bliss",
+        description: "Grey sectional Couch",
+        price: 294.94,
+        picture: "/img/couch1.webp",
+        category: "couch"
+      },
     ]
     const products = await Promise.all(productsToCreate.map(createProduct))
 

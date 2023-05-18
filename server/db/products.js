@@ -27,7 +27,7 @@ async function getAllProducts(){
     const { rows } = await client.query(`
       SELECT * FROM products
     `);
-console.log(client);
+console.log("hello", rows);
     return rows;
   } catch (error) {
     console.log(error);
@@ -53,7 +53,7 @@ async function getProductsByCategory(category){
       const {rows: products } = await client.query(`
       SELECT * FROM products
       WHERE category = $1
-      ` [category]
+      `, [category]
       );
       return products;
     } catch (error) {

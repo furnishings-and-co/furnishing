@@ -32,7 +32,7 @@ const AllProducts = () => {
             <p>Price: {product.price}</p>
             <p>Category: {product.category}</p>
             <img style={{ height: "400px", }} src={product.picture} alt="" />
-            {/* <button onClick={()=>navigate(`/players/${player.id}`)}>Add to Cart</button> */}
+            
           </div>
         );
       })}

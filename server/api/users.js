@@ -12,7 +12,7 @@ usersRouter.use((req, res, next) => {
 // post /api/users/register
 usersRouter.post('/register', async (req, res, next) => {
   const { username, password } = req.body;
-
+  console.log(username, password)
   try {
     const _user = await getUserByUsername(username);
       console.log(_user)

@@ -1,38 +1,43 @@
 import React, { useState } from 'react';
-import {DisplayProducts} from '../api/products'
+import { DisplayProducts } from '../api/products'
 import { useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
-import "../styles/Products.css"
-// import { ToastContainer } from 'react-toastify';
 
+import "../styles/Products.css"
+
+import { productsToMap } from '../api/data';
 
 const AllProducts = () => {
-  // const navigate=useNavigate()
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const [products, setProducts] = useState([])
+  const onClick = (category) => {
+    setSelectedCategory(category);
+  };
 
-  useEffect(() => {
-    async function getProducts() {
-      const products = await DisplayProducts()
-      setProducts(products)
-    }
-    getProducts();
-  }, [])
-
+  const filteredProducts = selectedCategory
+    ? productsToMap.filter((product) => product.category === selectedCategory)
+    : productsToMap;
 
   return (
     <div>
-      <h1>Products</h1>
-      {products.map((product) => {
-        return (
-          <div key={product.id}>
-            <p>{product.name}</p>
-            <p>Description: {product.description}</p>
-            <p>${product.price}</p>
-            <img style={{ height: "400px", }} src={product.picture} alt="" />
-          </div>
-        );
-      })}
+      <div className="category">
+      <button onClick={() => onClick("chair")}>CHAIRS</button>
+        <button onClick={() => onClick("couch")}>COUCHES</button>
+        <button onClick={() => onClick("light")}>LIGHTS</button>
+        <button onClick={() => onClick("table")}>TABLES</button>
+      </div>
+      <div>
+        {filteredProducts.map((product) => {
+          return (
+            <div key={product.id}>
+              <img style={{ height: "400px", }} src={product.picture} alt="" />
+              <p>{product.name}</p>
+              <p>Description: {product.description}</p>
+              <p>${product.price}</p>
+              <button>Add To Cart</button>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

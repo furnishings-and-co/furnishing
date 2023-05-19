@@ -2,20 +2,30 @@ import React, { useState } from 'react';
 import { DisplayProducts } from '../api/products'
 import { useEffect } from 'react';
 
+
 import "../styles/Products.css"
 
 import { productsToMap } from '../api/data';
+import { useNavigate } from 'react-router-dom';
 
 const AllProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
-
+  const [products, setProducts] = useState([])
+  useEffect(() => {
+    async function getProducts() {
+      const products = await DisplayProducts()
+      setProducts(products)
+    }
+    getProducts();
+  }, [])
+  // const navigate=useNavigate
   const onClick = (category) => {
     setSelectedCategory(category);
   };
 
   const filteredProducts = selectedCategory
-    ? productsToMap.filter((product) => product.category === selectedCategory)
-    : productsToMap;
+    ? products.filter((product) => product.category === selectedCategory)
+    : products;
 
   return (
     <div>

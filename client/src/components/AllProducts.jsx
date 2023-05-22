@@ -7,6 +7,7 @@ import "../styles/Products.css"
 
 import { productsToMap } from '../api/data';
 import { useNavigate } from 'react-router-dom';
+import { addProductToCart } from '../api/cart';
 
 const AllProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -43,7 +44,7 @@ const AllProducts = () => {
               <p>{product.name}</p>
               <p>Description: {product.description}</p>
               <p>${product.price}</p>
-              <button>Add To Cart</button>
+              <button onClick={() => onClick(addProductToCart(product.id))}>Add To Cart</button>
             </div>
           );
         })}

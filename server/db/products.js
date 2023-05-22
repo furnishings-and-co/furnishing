@@ -67,7 +67,7 @@ async function addProductToCart(userId, productId) {
       rows: [selectedItem],
     } = await client.query(
       `
-      INSERT INTO purchased_items ("userId", "productId", name, price, description, picture, category)
+      INSERT INTO cart ("userId", "productId", name, price, description, picture, category)
       SELECT $1, $2, name, price, description, picture, category
       FROM products
       WHERE id = $2

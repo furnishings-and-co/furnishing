@@ -12,149 +12,54 @@ usersRouter.use((req, res, next) => {
 // post /api/users/register
 usersRouter.post('/register', async (req, res, next) => {
   const { username, password } = req.body;
-  console.log(username, password)
   try {
-    const _user = await getUserByUsername(username);
-      console.log(_user)
-    if (_user) {
-     
-      res.status(401);
-      next({
-        name: 'UserExistsError',
-        message: `User ${username} is already taken.`
-      });
-     
-    }else if (password.length < 8) {
-   
-      res.status(401);
-      next({
-         
-        name: 'PasswordTooShortError',
-        message: 'Password Too Short!'
-      });
-      
-    }else{
-      const user = await createUser({
-          username,
-          password,
-         
-        });
-    
-        const token = jwt.sign({ 
-          id: user.id, 
-          username
-        }, process.env.JWT_SECRET, {
-          expiresIn: '1w'
-        });
-    
-        res.send({ 
-          message: "Thank you for signing up",
-          token,
-          user: {
-            id: user.id,
-            username: user.username
-          }
-        });
-      
-    }
-
-  
+    const { user, token } = await createUser(username, password);
+    res.json({ user, token });
   } catch (error) {
-    console.log(error);
+    console.error('Error creating user', error);
     next(error);
-  } 
+  }
 });
-
 
 // post /api/users/login
-usersRouter.post("/login", async (req, res, next) => {
+usersRouter.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
-
-  // request must have both
-  if (!username || !password) {
-    next({
-      name: "MissingCredentialsError",
-      message: "Please supply both a username and password",
-    });
-  }
-
   try {
-    const user = await getUserByUsername(username);
-
-    if (user) {
-      const isPasswordCorrect = await bcrypt.compare(password, user.password);
-
-      if (isPasswordCorrect) {
-        const token = jwt.sign(
-          {
-            id: user.id,
-            username: user.username,
-          },
-          JWT_SECRET,
-          {
-            expiresIn: "1w",
-          }
-        );
-
-        res.send({
-          message: "You're logged in!",
-          token,
-          user: {
-            id: user.id,
-            username: user.username,
-          },
-        });
-      } else {
-        next({
-          name: "IncorrectCredentialsError",
-          message: "Username or password is incorrect",
-        });
-      }
-    } else {
-      next({
-        name: "IncorrectCredentialsError",
-        message: "Username or password is incorrect",
-      });
+    const user = await getUser(username, password);
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid username or password' });
     }
+    const token = jwt.sign({ userId: user.id }, 'your-secret-key');
+    res.json({ user, token });
   } catch (error) {
-    console.log(error);
+    console.error('Error during login', error);
     next(error);
   }
 });
+
 
 
 // get /api/users/me
-usersRouter.get("/me", async (req, res, next) => {
-    try {
-      const token = req.headers.authorization?.split(" ")[1];
-      if (!token) {
-        // No token provided
-        res.status(401);
-        next({
-          name: "UnauthorizedError",
-          message: "You must be logged in to perform this action",
-        // Set the status code to 401 (Unauthorized)
-        });
-      }
-  
-      const decodedToken = jwt.verify(token, JWT_SECRET);
-      const user = await getUserByUsername(decodedToken.username);
-  
-      if (user) {
-        res.send(user);
-      } else {
-        res.status(401);
-        next({
-          name: "UnauthorizedError",
-          message: "Invalid token",
-        // Set the status code to 401 (Unauthorized)
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      next(error);
+usersRouter.get('/:username/:id', async (req, res, next) => {
+  const { id, username } = req.params;
+  console.log(id, username);
+  try {
+    let user;
+    if (isNaN(id) || isNaN(username)) {
+      user = await getUserByUsername(username);
+    } else {
+      user = await getUserById(id);
     }
-  });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+});
   
   // usersRouter.get("/:username/routines", async (req, res, next) => {
   //   try {

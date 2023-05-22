@@ -7,6 +7,7 @@ const dropTables = async () => {
     console.log('Starting to drop all tables...');
     await client.query(`
     DROP TABLE IF EXISTS purchased_items;
+    DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS users;
     `);
@@ -37,6 +38,15 @@ async function createTables() {
         category VARCHAR(255) NOT NULL,
         picture TEXT NOT NULL
       );
+      CREATE TABLE cart (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) UNIQUE NOT NULL,
+        price DECIMAL(10, 2),
+        description TEXT NOT NULL,
+        picture TEXT NOT NULL,
+        "userId" INTEGER REFERENCES users (id),
+        "productId" INTEGER REFERENCES products (id)
+      );
       CREATE TABLE purchased_items (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) UNIQUE NOT NULL,
@@ -64,8 +74,10 @@ async function createInitialUsers() {
       { username: "glamgal", password: "glamgal123", isAdmin: false },
       { username: "admin", password: "admin123", isAdmin: true }
     ]
-    const users = await Promise.all(usersToCreate.map(createUser))
+    console.log("hi")
+    const users = await Promise.all(usersToCreate.map(user => createUser(user.username, user.password)));
 
+    
     console.log("Users created:")
     console.log(users)
     console.log("Finished creating users!")

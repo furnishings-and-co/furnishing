@@ -24,7 +24,7 @@ async function createCart({ userId, productId, name, description, price, picture
       } = await client.query(
         `
     SELECT name, price, description, picture
-    FROM purchased_items 
+    FROM cart
     WHERE userId = $1 AND productId = $2;
     `)
     return cart;
@@ -35,10 +35,10 @@ async function createCart({ userId, productId, name, description, price, picture
 
 async function removeProductFromCart({ productId }) {
   try {
-    // Delete product from purchased_items
+    // Delete product from cart
      const {rows} = await client.query(
       `
-      DELETE FROM purchased_items
+      DELETE FROM cart
       WHERE "productId" = $1
       RETURNING *;
     `,
@@ -53,7 +53,7 @@ async function removeProductFromCart({ productId }) {
 
 async function clearCart() {
   try {
-    const {rows} = await client.query(`TRUNCATE purchased_items`);
+    const {rows} = await client.query(`TRUNCATE cart`);
     return rows;
   } catch (error) {
     console.log(error);

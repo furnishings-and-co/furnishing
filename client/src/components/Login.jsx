@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { loginUser } from "../api/users";
-
+import { registerUser } from "../api/users";
 import { useNavigate } from "react-router-dom";
-// import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 // import "../Styles/Login.css";
 
 const Login = ({ setToken, onClose }) => {
@@ -11,6 +11,7 @@ const Login = ({ setToken, onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await registerUser(username, password);
@@ -18,7 +19,7 @@ const Login = ({ setToken, onClose }) => {
     setToken(token);
     setUsername("");
     setPassword("");
-    onClose(false)
+    // onClose(false)
   };
 
   const handleLogin = async (e) => {
@@ -30,8 +31,8 @@ const Login = ({ setToken, onClose }) => {
     setPassword("");
 
     if (token) {
-      navigate("/myRoutines");
-      onClose(false);
+      navigate("/products/me");
+      // onClose(false);
     }
   };
 

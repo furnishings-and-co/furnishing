@@ -3,44 +3,49 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const SALT_COUNT = 10;
 
-async function createUser({ username, password, isAdmin = false }) {
-  const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-
+async function createUser(username, password) {
   try {
-    const {
-      rows: [user],
-    } = await client.query(
-      `
-    INSERT INTO users(username, password, "isAdmin") 
-    VALUES ($1, $2, $3)
-    ON CONFLICT (username) DO NOTHING 
-    RETURNING id, username;
-    `,
-      [username, hashedPassword, isAdmin]
-    );
-    return user;
+    const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+    const query = `
+      INSERT INTO users (username, password)
+      VALUES ($1, $2)
+      RETURNING id, username;
+    `;
+    const values = [username, hashedPassword];
+    const result = await client.query(query, values);
+    
+    const user = result.rows[0];
+    
+    // Generate JWT token
+    const token = jwt.sign({ userId: user.id }, 'your-secret-key');
+    
+    return { user, token };
   } catch (error) {
+    console.error('Error creating user', error);
     throw error;
   }
 }
 
-async function getUser({ username, password }) {
-  if (!username || !password) {
-    return;
-  }
-
+async function getUser(username, password) {
   try {
-    const user = await getUserByUsername(username);
-    if (!user) return;
-
-    const hashedPassword = user.password;
-    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
-
-    if (!passwordsMatch) return;
-
-    delete user.password;
+    const query = `
+      SELECT *
+      FROM users
+      WHERE username = $1;
+    `;
+    const values = [username];
+    const result = await client.query(query, values);
+    if (result.rows.length === 0) {
+      return null; // User not found
+    }
+    const user = result.rows[0];
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return null; // Incorrect password
+    }
     return user;
   } catch (error) {
+    console.error('Error getting user', error);
     throw error;
   }
 }

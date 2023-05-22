@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { addProductToCart } from '../api/cart';
 
 const AllProducts = () => {
+  const navigate=useNavigate()
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [products, setProducts] = useState([])
   useEffect(() => {
@@ -45,6 +46,7 @@ const AllProducts = () => {
               <p>Description: {product.description}</p>
               <p>${product.price}</p>
               <button onClick={() => onClick(addProductToCart(product.id))}>Add To Cart</button>
+              <button onClick={() => navigate(`/products/single/${product.id}`)}>View Product</button>
             </div>
           );
         })}

@@ -21,13 +21,13 @@ export async function DisplayProducts() {
 
   export async function GetProduct(id) {
     try {
-      const response = await fetch(`${BASE_URL}/products/${id}`, {
+      const response = await fetch(`${BASE_URL}/products/single/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
       const result = await response.json();
-      console.log(result)
+      console.log(result, "get product result")
       return result;
   
     //   if (!result.error) {

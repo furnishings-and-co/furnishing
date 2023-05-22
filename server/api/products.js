@@ -33,11 +33,11 @@ productRouter.get("/:category", async (req, res, next) => {
     }
   });
 
-  productRouter.get("/single/:productId", async (req, res, next) => {
-    const { productId } = req.params;
-  console.log(productId)
+  productRouter.get("/single/:id", async (req, res, next) => {
+    const { id } = req.params;
+  console.log(id, "productID")
     try {
-      const singleProduct = await getProductsById(productId);
+      const singleProduct = await getProductsById(id);
       res.send(singleProduct);
     } catch (error) {
       next(error);

@@ -34,17 +34,16 @@ console.log("hello", rows);
   }
 }
 
-async function getProductsById(id){
-
-    try {
-      const {rows: [products] } = await client.query(`
+async function getProductsById(id) {
+  try {
+    const { rows: [product] } = await client.query(`
       SELECT * FROM products
       WHERE id = $1
-      `, [id]
-      );
-      return products;
-    } catch (error) {
-      throw error;
+    `, [id]);
+
+    return product;
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -61,31 +60,11 @@ async function getProductsByCategory(category){
     }
 }
 
-async function addProductToCart(userId, productId) {
-  try {
-    const {
-      rows: [selectedItem],
-    } = await client.query(
-      `
-      INSERT INTO cart ("userId", "productId", name, price, description, picture, category)
-      SELECT $1, $2, name, price, description, picture, category
-      FROM products
-      WHERE id = $2
-      RETURNING *;
-    `,
-      [userId, productId]
-    );
 
-    return selectedItem;
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 module.exports = {
   createProduct,
   getAllProducts,
   getProductsById,
   getProductsByCategory,
-  addProductToCart
 };

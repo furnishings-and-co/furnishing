@@ -19,14 +19,15 @@ export async function DisplayProducts() {
     }
   }
 
-  export async function GetProduct(Id) {
+  export async function GetProduct(id) {
     try {
-      const response = await fetch(`${BASE_URL}/products/${Id}`, {
+      const response = await fetch(`${BASE_URL}/products/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
       const result = await response.json();
+      console.log(result)
       return result;
   
     //   if (!result.error) {

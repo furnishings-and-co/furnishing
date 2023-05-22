@@ -1,3 +1,4 @@
+const { addProductToCart } = require('../../client/src/api/cart');
 const client = require('./client');
 const { createProduct } = require('./products');
 const { createUser } = require('./users');
@@ -40,12 +41,9 @@ async function createTables() {
       );
       CREATE TABLE cart (
         id SERIAL PRIMARY KEY,
-        name VARCHAR(255) UNIQUE NOT NULL,
-        price DECIMAL(10, 2),
-        description TEXT NOT NULL,
-        picture TEXT NOT NULL,
-        "userId" INTEGER REFERENCES users (id),
-        "productId" INTEGER REFERENCES products (id)
+        "userId" INT REFERENCES users(id),
+        "productId" INT REFERENCES products(id),
+        quantity INT
       );
       CREATE TABLE purchased_items (
         id SERIAL PRIMARY KEY,
@@ -86,6 +84,7 @@ async function createInitialUsers() {
     throw error
   }
 }
+
 
 async function createInitialProducts() {
   try {

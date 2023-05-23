@@ -125,10 +125,4 @@ module.exports = {
   getAllProducts,
   getProductsById,
   getProductsByCategory,
-<<<<<<< Updated upstream
-=======
-  addProductToCart,
-  removeProduct,
-  editProduct,
->>>>>>> Stashed changes
 };

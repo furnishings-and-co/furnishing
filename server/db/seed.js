@@ -1,4 +1,3 @@
-const { addProductToCart } = require('../../client/src/api/cart');
 const client = require('./client');
 const { createProduct } = require('./products');
 const { createUser } = require('./users');
@@ -92,129 +91,68 @@ async function createInitialProducts() {
 
 const productsToCreate=[
   { 
-
     name: "BohemianBreeze", 
-
     description: "Bohemian-inspired woven rattan chair with a comfortable cushion.", 
-
     price: 199.99, 
-
     picture: "/img/chair7.jpg", 
-
     category: "chair" 
-
   }, 
-
   { 
-
     name: "VersatileVanity", 
-
     description: "Elegant vanity chair with a padded seat and mirrored accents.", 
-
     price: 129.99, 
-
-    picture: "/img/chair8.webp", 
-
+    picture: "/img/chair.jpg", 
     category: "chair" 
-
   }, 
-
   { 
-
     name: "Grey Bliss", 
-
     description: "Grey sectional Couch", 
-
     price: 294.94, 
-
     picture: "/img/couch1.webp", 
-
     category: "couch" 
-
   }, 
-
   { 
-
     name: "Modern Minimalist", 
-
     description: "Sleek and minimalist white leather couch with clean lines.", 
-
     price: 599.99, 
-
     picture: "/img/couch2.webp", 
-
     category: "couch" 
-
   }, 
   { 
-
     name: "Standard Lamp", 
-
     description: "Really Really Bright", 
-
     price: 50.99, 
-
     picture: "/img/light1.jpg", 
-
     category: "light" 
-
   }, 
-
   { 
-
     name: "Elegant Chandelier", 
-
     description: "Crystal chandelier with intricate design and sparkling lights.", 
-
     price: 299.99, 
-
     picture: "/img/light2.jpg", 
-
     category: "light" 
-
   }, 
-
   { 
-
     name: "Glamorous Vanity Table", 
-
     description: "Glamorous vanity table with a mirrored surface and elegant design.", 
-
     price: 349.99, 
-
     picture: "/img/table8.webp", 
-
     category: "table" 
-
   }, 
-
   { 
-
     name: "Minimalist Writing Desk", 
-
     description: "Minimalist writing desk with clean lines and a spacious work area.", 
-
     price: 299.99, 
-
     picture: "/img/table9.webp", 
-
     category: "table" 
-
   }, 
   { 
-
     name: "Farmhouse Dining Table", 
-
     description: "Charming farmhouse-style dining table with a reclaimed wood look.", 
-
     price: 699.99, 
-
     picture: "/img/table7.webp", 
-
     category: "table" 
-
   }
-
 ]
     const products = await Promise.all(productsToCreate.map(createProduct))
 
@@ -247,10 +185,3 @@ const rebuildDB = async () => {
 };
 
 rebuildDB();
-
-
-
-
-
-
-

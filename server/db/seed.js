@@ -72,7 +72,7 @@ async function createInitialUsers() {
       { username: "admin", password: "admin123", isAdmin: true }
     ]
     console.log("hi")
-    const users = await Promise.all(usersToCreate.map(user => createUser(user.username, user.password)));
+    const users = await Promise.all(usersToCreate.map(user => createUser(user.username, user.password, user.isAdmin)));
 
     
     console.log("Users created:")

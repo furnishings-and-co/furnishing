@@ -151,5 +151,5 @@ module.exports = {
   getUser,
   getUserById,
   getUserByUsername,
-  isAdmin,
+  // isAdmin,
 };

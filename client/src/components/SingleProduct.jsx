@@ -16,7 +16,7 @@ const SingleProduct = () => {
             setProduct(product)}
             getSingleProduct()
             },[])
-            console.log(product)
+            console.log(product, "useEffect")
              
             return (
                 <div 
@@ -26,6 +26,7 @@ const SingleProduct = () => {
                   <p>Description: {product.description}</p>
                   <p>$:{product.price}</p>
                   <img style={{height:"400px",}} src={product.picture} alt="" />
+                  <button onClick={() => onClick(addProductToCart(product.id))}>Add To Cart</button>
                   {/* <button onClick={
                     async()=>{await addProductToCart(product.id);
                 navigate('/')}}

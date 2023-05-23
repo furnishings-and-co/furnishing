@@ -6,10 +6,10 @@ const dropTables = async () => {
   try {
     console.log('Starting to drop all tables...');
     await client.query(`
-    DROP TABLE IF EXISTS purchased_items;
-    DROP TABLE IF EXISTS cart;
-    DROP TABLE IF EXISTS products;
+    DROP TABLE IF EXISTS cart_products;
+    DROP TABLE IF EXISTS carts;
     DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS products;
     `);
     console.log('Finished droppping all tables successfully!');
   } catch (error) {
@@ -38,21 +38,17 @@ async function createTables() {
         category VARCHAR(255) NOT NULL,
         picture TEXT NOT NULL
       );
-      CREATE TABLE cart (
+      CREATE TABLE carts (
         id SERIAL PRIMARY KEY,
-        "userId" INT REFERENCES users(id),
-        "productId" INT REFERENCES products(id),
-        quantity INT
+        user_id INT REFERENCES users(id) NOT NUll,
+        is_active BOOLEAN DEFAULT true
       );
-      CREATE TABLE purchased_items (
+      CREATE TABLE cart_products(
         id SERIAL PRIMARY KEY,
-        name VARCHAR(255) UNIQUE NOT NULL,
-        price DECIMAL(10, 2),
-        description TEXT NOT NULL,
-        picture TEXT NOT NULL,
-        "userId" INTEGER REFERENCES users (id),
-        "productId" INTEGER REFERENCES products (id)
-      );
+        cart_id INTEGER REFERENCES carts(id) NOT NULL,
+        product_id INTEGER REFERENCES products(id) NOT NULL,
+        quantity INTEGER DEFAULT 1
+      )
     `);
 
     console.log("Finished building tables!");
@@ -71,6 +67,8 @@ async function createInitialUsers() {
       { username: "glamgal", password: "glamgal123", isAdmin: false },
       { username: "admin", password: "admin123", isAdmin: true }
     ]
+
+
     console.log("hi")
     const users = await Promise.all(usersToCreate.map(user => createUser(user.username, user.password, user.isAdmin)));
 

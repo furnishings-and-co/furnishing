@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { GetProduct } from '../api/products';
 import { addProductToCart } from '../api/cart';
 
+
 const SingleProduct = () => {
     const {id}= useParams()
    const navigate=useNavigate()
@@ -17,7 +18,6 @@ const SingleProduct = () => {
             getSingleProduct()
             },[])
             console.log(product, "useEffect")
-             
             return (
                 <div 
                 
@@ -32,6 +32,8 @@ const SingleProduct = () => {
                 navigate('/')}}
                     >Delete</button> */}
                 </div>)
+
+
 
 }
                

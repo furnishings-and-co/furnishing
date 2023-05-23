@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import "../styles/NavBar.css"
 
-const NavBar = () => {
+const NavBar = ({token,setToken, setUser, user}) => {
+    console.log(user)
     return (
         <div className='Navbar'>
             <img className="logo" src="./img/logo.png" />

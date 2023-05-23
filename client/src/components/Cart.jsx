@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 const Cart = () => {
     
-    const [cart, setCart] = useState([])
+    
     useEffect(() => {
       async function getCart() {
         const cart = await DisplayCart()

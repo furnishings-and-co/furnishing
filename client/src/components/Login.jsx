@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { loginUser } from "../api/users";
-import { registerUser } from "../api/users";
+import {loginUser, registerUser} from "../api/users"
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 // import "../Styles/Login.css";
@@ -9,6 +8,8 @@ const Login = ({ setToken, onClose }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const [cart, setCart] = useState({});
+  const [auth, setAuth] = useState({});
   const navigate = useNavigate();
 
 

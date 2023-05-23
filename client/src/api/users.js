@@ -1,6 +1,7 @@
 const BASE_URL= "http://localhost:8080/api";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+
+
 
 
 /**
@@ -9,87 +10,94 @@ import "react-toastify/dist/ReactToastify.css";
  * @param {string} password The desired password for the new user.
  * @returns {Promise<string>} The JWT token for the newly registered user.
  */
-export const registerUser = async (username, password) => {
-  try {
-    const response = await fetch(`${BASE_URL}/users/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    });
-    const result = await response.json();
-    console.log(response, username, password);
-    if (result.token) {
-      toast.success(`Welcome to Furnishings & Co ${username}!`, {
-        position: "bottom-center",
-        autoClose: 3000,
-        style: {
-          fontSize: "16px",
+
+
+
+
+
+  export const registerUser = async (username, password) => {
+  
+    try {
+      const response = await fetch(`${BASE_URL}/users/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
       });
-      return result.token;
-    } else {
-      toast.error(result.message || "Registration failed. Please try again.", {
-        position: "bottom-center",
-        autoClose: 3000,
-        style: {
-          fontSize: "16px",
-        },
-      });
+      const result = await response.json();
+      console.log(response, username, password);
+      if (result.token) {
+        // toast.success(`Welcome to Furnishings & Co ${username}!`, {
+        //   position: 'bottom-center',
+        //   autoClose: 3000,
+        //   style: {
+        //     fontSize: '16px',
+        //   },
+        // });
+      
+        return result.token;
+      } else {
+        // toast.error(result.message || 'Registration failed. Please try again.', {
+        //   position: 'bottom-center',
+        //   autoClose: 3000,
+        //   style: {
+        //     fontSize: '16px',
+        //   },
+        // });
+      }
+    } catch (err) {
+      console.error(err);
     }
-  } catch (err) {
-    console.error(err);
-  }
-};
+  };
 
-
-/**
- * Logs in an existing user with the API.
- * @param {string} username The username of the existing user.
- * @param {string} password The password of the existing user.
- * @returns {Promise<string>} The JWT token for the logged-in user.
- */
-export const loginUser = async (username, password) => {
-  try {
-    const response = await fetch(`${BASE_URL}/users/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    });
-    const result = await response.json();
-
-
-    if (result.token) {
-      toast.success(`Welcome back to Furnishings & Co ${username}!`, {
-        position: "bottom-center",
-        autoClose: 3000,
-        style: {
-          fontSize: "16px",
+  export const loginUser = async (username, password) => {
+  
+    try {
+      const response = await fetch(`${BASE_URL}/users/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
       });
-      return result.token;
-    } else {
-      toast.error(result.message || "Log in failed. Please try again.", {
-        position: "bottom-center",
-        autoClose: 3000,
-        style: {
-          fontSize: "16px",
-        },
-      });
+
+      const result = await response.json();
+
+      if (result.token) {
+        // toast.success(`Welcome back to Furnishings & Co ${username}!`, {
+        //   position: 'bottom-center',
+        //   autoClose: 3000,
+        //   style: {
+        //     fontSize: '16px',
+        //   },
+        // });
+
+      
+      
+        return result.token;
+      } else {
+        // toast.error(result.message || 'Log in failed. Please try again.', {
+        //   position: 'bottom-center',
+        //   autoClose: 3000,
+        //   style: {
+        //     fontSize: '16px',
+        //   },
+        // });
+      }
+    } catch (err) {
+      console.error(err);
     }
-  } catch (err) {
-    console.error(err);
-  }
-};
+  };
+
+
+
 
 
 /**

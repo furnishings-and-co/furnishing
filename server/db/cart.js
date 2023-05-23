@@ -1,80 +1,57 @@
-// async function createCart({ userId, productId, name, description, price, picture }) {
-//     try {
-//       const {
-//         rows: [cart],
-//       } = await client.query(
-//         `
-//     INSERT INTO products("userId", "productId", name, description, price, picture) 
-//     VALUES($1, $2, $3, $4, $5, $6) 
-//     RETURNING *;
-//   `,
-//         [userId, productId, name, description, price, picture]
-//       );
+const client = require('./client');
+const { createUser } = require('./users');
+
+const createCart=async ({userId})=>{
+    const SQL=`
+    INSERT INTO carts(user_id)
+    Values($1) RETURNING *`
+
+    const response=await client.query(SQL, [userId]);
+    return response.rows[0];
+}
+
+const getCartByUserId = async ({ userId }) => {
+    const SQL = `
+      SELECT * FROM carts
+      WHERE user_id = $1 AND is_active = true;
+    `;
+    const response = await client.query(SQL, [userId]);
+    const cart = response.rows[0];
+    const productsSQL = `
+    SELECT * FROM cart_products
+    LEFT JOIN products ON cart_products.product_id = products.id
+    WHERE cart_products.cart_id = $1
+    `;
+    const productsResponse = await client.query(productsSQL, [cart.id]);
+    cart.products = productsResponse.rows;
+    return cart;
+  };
+
+const addProductToCart = async ({ cartId, productId }) => {
+    const checkSQL = `
+      SELECT * FROM cart_products
+      WHERE cart_id = $1 AND product_id = $2
+    `;
+    const checkResponse = await client.query(checkSQL, [cartId, productId]);
+    if (checkResponse.rows.length) {
+      await client.query(
+        `UPDATE cart_products SET quantity = quantity + 1 WHERE cart_id = $1 AND product_id = $2`,
+        [cartId, productId]
+      );
+      return;
+    }
   
-//       return cart;
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
+    const SQL = `
+      INSERT INTO cart_products(product_id, cart_id)
+      VALUES($1, $2)
+      RETURNING *
+      `;
+    await client.query(SQL, [productId, cartId]);
+    return;
+  };
 
-//   async function getCart() {
-//     try {
-//       const {
-//         rows: [cart],
-//       } = await client.query(
-//         `
-//     SELECT name, price, description, picture
-//     FROM cart
-//     WHERE userId = $1 AND productId = $2;
-//     `)
-//     return cart;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
-// async function removeProductFromCart({ productId }) {
-//   try {
-//     // Delete product from cart
-//      const {rows} = await client.query(
-//       `
-//       DELETE FROM cart
-//       WHERE "productId" = $1
-//       RETURNING *;
-//     `,
-//       [productId]
-//     );
-//     return rows;
-//   } catch (error) {
-//     await client.query("ROLLBACK");
-//     console.log(error);
-//   }
-// }
-
-// async function clearCart() {
-//   try {
-//     const {rows} = await client.query(`TRUNCATE cart`);
-//     return rows;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-// async function addProductToCart(userId, productId, quantity) {
-//   try {
-//     const {
-//       rows: [selectedItem],
-//     } = await client.query(
-//       `
-//       INSERT INTO cart (userId, productId, quantity)
-//       VALUES ($1, $2, $3)
-//       RETURNING *;
-//     `,
-//       [userId, productId, quantity]
-//     );
-//       console.log(selectedItem)
-//     return selectedItem;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-//   module.exports = {getCart, removeProductFromCart, clearCart, addProductToCart};
+    module.exports = {
+        createCart,
+        getCartByUserId,
+        addProductToCart
+      };

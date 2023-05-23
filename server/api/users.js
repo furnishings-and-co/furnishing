@@ -40,26 +40,18 @@ usersRouter.post('/login', async (req, res, next) => {
 
 
 // get /api/users/me
-usersRouter.get('/:username/:id', async (req, res, next) => {
-  const { id, username } = req.params;
-  console.log(id, username);
+usersRouter.get('/me', async (req, res, next) => {
+  const item = req.body;
+  console.log(item);
   try {
-    let user;
-    if (isNaN(id) || isNaN(username)) {
-      user = await getUserByUsername(username);
-    } else {
+      // get user by token
       user = await getUserById(id);
-    }
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json(user);
-  } catch (error) {
-    next(error);
+  }catch(error){
+    console.log(error)
   }
-});
+})
+
+
   
   // usersRouter.get("/:username/routines", async (req, res, next) => {
   //   try {

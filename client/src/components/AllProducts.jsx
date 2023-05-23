@@ -9,7 +9,7 @@ import { productsToMap } from '../api/data';
 import { useNavigate } from 'react-router-dom';
 import { addProductToCart } from '../api/cart';
 
-const AllProducts = () => {
+const AllProducts = ({setCart}) => {
   const navigate=useNavigate()
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [products, setProducts] = useState([])
@@ -45,7 +45,10 @@ const AllProducts = () => {
               <p>{product.name}</p>
               <p>Description: {product.description}</p>
               <p>${product.price}</p>
-              <button onClick={() => onClick(addProductToCart(product.id))}>Add To Cart</button>
+              <button onClick={async() =>{
+                const newCart= await addProductToCart(product.id);
+                setCart(newCart)
+              }}>Add To Cart</button>
               <button onClick={() => navigate(`/products/single/${product.id}`)}>View Product</button>
             </div>
           );

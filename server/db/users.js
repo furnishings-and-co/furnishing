@@ -1,11 +1,15 @@
+// require('dotenv').config();
 const client = require("./client");
 const jwt = require("jsonwebtoken");
+const {JWT_SECRET}=process.env;
 const bcrypt = require("bcrypt");
 const { createProduct, removeProduct, editProduct } = require("./products");
 const SALT_COUNT = 10;
 
+
 async function createUser(username, password, isAdmin) {
   try {
+    
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
     const query = `
       INSERT INTO users (username, password, "isAdmin")
@@ -16,11 +20,16 @@ async function createUser(username, password, isAdmin) {
     const result = await client.query(query, values);
 
     const user = result.rows[0];
-
+    console.log("JWT Secret 1" , JWT_SECRET)
+    
     // Generate JWT token
-    const token = jwt.sign({ userId: user.id }, "your-secret-key");
+    if(JWT_SECRET){
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET);
 
-    return { user, token };
+    return { user, token };}
+    else{
+      return{user}
+    }
   } catch (error) {
     console.error("Error creating user", error);
     throw error;
@@ -92,59 +101,30 @@ async function getUserByUsername(userName) {
   }
 }
 
-// async function isAdmin(userId) {
-//   try {
-//     const {
-//       rows: [users],
-//     } = await client.query(
-//       `
-//       SELECT *
-//       FROM users
-//       WHERE isAdmin = true;
-//       `,
-//       [userId]
-//     );
-//     if (!user) {
-//       return false;
-//     }
-//     await createProduct();
-//     await removeProduct();
-//     await editProduct();
-//     return users.isAdmin;
-//   } catch (error) {
-//     console.error("Error checking isAdmin");
-//   }
-// }
-
-// async function testProductFunctions() {
-//   try {
-//     // Test isAdmin
-//     const userId = 1; // Provide a valid user ID for testing
-//     const isAdminUser = await isAdmin(userId);
-//     console.log("Is Admin:", isAdminUser);
-
-//     // Test removeProduct
-//     const productId = 1; // Provide a valid product ID for testing
-//     const removedProductId = await removeProduct(productId, userId);
-//     console.log("Removed Product ID:", removedProductId);
-
-//     // Test editProduct
-//     const updatedProduct = await editProduct(
-//       productId,
-//       "Updated Product",
-//       "This is an updated product",
-//       19.99,
-//       "updated.jpg",
-//       "Updated Category",
-//       userId
-//     );
-//     console.log("Updated Product:", updatedProduct);
-//   } catch (error) {
-//     console.error("Error in product functions:", error);
-//   }
-// }
-
-// testProductFunctions();
+const getUserByToken = async(token) => {
+console.log("JWTSECRET", JWT_SECRET)
+ try{
+  const payload = await jwt.verify(token, JWT_SECRET);
+  const SQL = `
+    SELECT users.*
+    FROM users
+    WHERE id = $1 
+  `;
+  console.log("payload", payload)
+  const response = await client.query(SQL, [ payload.userId]);
+  console.log("response", response)
+  if(!response.rows.length){
+    const error = Error('not authorized');
+    error.status = 401;
+    throw error;
+  }
+  const user = response.rows[0];
+  delete user.password;
+  return user; }
+  catch (error) {
+    console.error(error);
+  }
+}
 
 module.exports = {
   createUser,

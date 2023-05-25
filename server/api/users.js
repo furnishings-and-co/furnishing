@@ -1,5 +1,5 @@
 const usersRouter = require('express').Router();
-const { createUser, getUserByUsername, getUser, getUserById } = require('../db');
+const { createUser, getUserByUsername, getUser, getUserById, getUserByToken } = require('../db');
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
@@ -29,7 +29,7 @@ usersRouter.post('/login', async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
-    const token = jwt.sign({ userId: user.id }, 'your-secret-key');
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET);
     res.json({ user, token });
   } catch (error) {
     console.error('Error during login', error);
@@ -40,26 +40,21 @@ usersRouter.post('/login', async (req, res, next) => {
 
 
 // get /api/users/me
-usersRouter.get('/:username/:id', async (req, res, next) => {
-  const { id, username } = req.params;
-  console.log(id, username);
+usersRouter.get('/me', async (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1]
+  console.log("token", token);
   try {
-    let user;
-    if (isNaN(id) || isNaN(username)) {
-      user = await getUserByUsername(username);
-    } else {
-      user = await getUserById(id);
-    }
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json(user);
-  } catch (error) {
-    next(error);
+      // get user by token
+      console.log("made it into the try")
+     const user = await getUserByToken(token);
+     console.log("this is the user", user)
+     res.send(user)
+  }catch(error){
+    console.log(error)
   }
-});
+})
+
+
   
   // usersRouter.get("/:username/routines", async (req, res, next) => {
   //   try {

@@ -8,8 +8,8 @@ const dropTables = async () => {
     await client.query(`
     DROP TABLE IF EXISTS purchased_items;
     DROP TABLE IF EXISTS cart;
-    DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS products;
     `);
     console.log('Finished droppping all tables successfully!');
   } catch (error) {
@@ -73,7 +73,7 @@ async function createInitialUsers() {
     ]
     console.log("hi")
     const users = await Promise.all(usersToCreate.map(user => createUser(user.username, user.password, user.isAdmin)));
-
+    console.log("users", users)
     
     console.log("Users created:")
     console.log(users)
@@ -171,17 +171,23 @@ const rebuildDB = async () => {
     console.log("dropped tables")
     await createTables();
     console.log("created tables")
-    await createInitialUsers();
-    console.log("createdUsers tables")
     await createInitialProducts();
     console.log("createdProducts tables")
+    await createInitialUsers();
+    console.log("createdUsers tables")
+    
   } catch (error) {
     console.error('Error during rebuildDB', error);
     throw error;
   } finally {
-    await client.end();
+    
     console.log("Database has been rebuilt, and you're good to go!");
   }
 };
+rebuildDB().catch(error => {
+  console.error("Error during database rebuild:", error);
+}).finally(() => {
+  client.end();
+});
 
-rebuildDB();
+

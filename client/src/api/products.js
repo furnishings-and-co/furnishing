@@ -27,7 +27,7 @@ export async function DisplayProducts() {
         },
       });
       const result = await response.json();
-      console.log(result, "get product result")
+      // console.log(result, "get product result")
       return result;
   
     //   if (!result.error) {

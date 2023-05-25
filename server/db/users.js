@@ -131,5 +131,6 @@ module.exports = {
   getUser,
   getUserById,
   getUserByUsername,
+  getUserByToken
   // isAdmin,
 };

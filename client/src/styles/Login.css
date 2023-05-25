@@ -1,0 +1,97 @@
+.loginCard {
+    width: 500px;
+    position: relative;
+    height: 390px;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #e8e8e8;
+    box-shadow: 2px 2px 10px #ccc;
+}
+  .close-button-nav{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+  }
+  .close-button-nav {
+    color: #4a3432;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: 600;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  .close-button-nav:hover {
+    color: #9a9190;
+  }
+  .cardHeader {
+    text-align: center;
+    margin-bottom: 25px;
+    margin: 0;
+    font-size: 24px;
+    color: black;
+  }
+  
+  .log {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: black;
+  }
+  
+  .loginForm {
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: 0.5s;
+  }
+  
+  .loginButton {
+    width: 100%;
+    background-color: #4a3432;
+    color: white;
+    padding: 20px 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #7b706f;
+    color: white;
+  }
+  #createOne {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #createOne button {
+    background-color: #e8e8e8;
+    border: none;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  #createOne:hover button{
+    text-decoration: underline;
+    color: black;
+    cursor: pointer;
+  }

@@ -1,0 +1,95 @@
+.section {
+    display: flex;
+  }
+  
+  .left {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    margin-right: 15%;
+    margin: 20px;
+    border-right: 3px solid #551E19;
+  }
+  
+  .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15%;
+    align-items: center;
+    width: 70%;
+  }
+.right img{
+    height: 250px !important;
+    width: auto;
+    flex-shrink: 0;
+    border-radius: 5%;
+}  
+.category{
+    width: 200px;
+    margin-bottom: 40px ;
+    font-size: 15px;
+    font-family: Arial,Helvetica,sans-serif;
+    background-color: white;
+    border: none;
+}
+.category:hover{
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.429);
+    text-decoration: underline;
+}
+.product-container {
+    display: flex;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #f0efef;
+    border-radius: 5%;
+  }
+  
+  .info-container {
+    margin: 10px;
+    flex-grow: 1;
+    
+  }
+  
+  .price-button-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .button-container {
+    margin-top: 10px;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100px;
+  }
+  .name{
+    font-weight: bold;
+    font-size: 20px;
+    font-family: Arial,Helvetica,sans-serif;
+  }
+  .name:hover{
+    cursor:default;
+  }
+  .description{
+    font-family: Arial,Helvetica,sans-serif;
+  }
+  .description:hover{
+    cursor:default;
+  }
+  .price{
+    font-family: Arial,Helvetica,sans-serif;
+  }
+  .price:hover{
+    cursor:default;
+  }
+  .button{
+    font-family: Arial,Helvetica,sans-serif;
+    
+  }
+  .button:hover{
+    cursor: pointer;
+  }

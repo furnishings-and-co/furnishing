@@ -89,71 +89,72 @@ async function createInitialProducts() {
   try {
     console.log("Starting to create products...")
 
-const productsToCreate=[
-  { 
-    name: "BohemianBreeze", 
-    description: "Bohemian-inspired woven rattan chair with a comfortable cushion.", 
-    price: 199.99, 
-    picture: "/img/chair7.jpg", 
-    category: "chair" 
-  }, 
-  { 
-    name: "VersatileVanity", 
-    description: "Elegant vanity chair with a padded seat and mirrored accents.", 
-    price: 129.99, 
-    picture: "/img/chair.jpg", 
-    category: "chair" 
-  }, 
-  { 
-    name: "Grey Bliss", 
-    description: "Grey sectional Couch", 
-    price: 294.94, 
-    picture: "/img/couch1.webp", 
-    category: "couch" 
-  }, 
-  { 
-    name: "Modern Minimalist", 
-    description: "Sleek and minimalist white leather couch with clean lines.", 
-    price: 599.99, 
-    picture: "/img/couch2.webp", 
-    category: "couch" 
-  }, 
-  { 
-    name: "Standard Lamp", 
-    description: "Really Really Bright", 
-    price: 50.99, 
-    picture: "/img/light1.jpg", 
-    category: "light" 
-  }, 
-  { 
-    name: "Elegant Chandelier", 
-    description: "Crystal chandelier with intricate design and sparkling lights.", 
-    price: 299.99, 
-    picture: "/img/light2.jpg", 
-    category: "light" 
-  }, 
-  { 
-    name: "Glamorous Vanity Table", 
-    description: "Glamorous vanity table with a mirrored surface and elegant design.", 
-    price: 349.99, 
-    picture: "/img/table8.webp", 
-    category: "table" 
-  }, 
-  { 
-    name: "Minimalist Writing Desk", 
-    description: "Minimalist writing desk with clean lines and a spacious work area.", 
-    price: 299.99, 
-    picture: "/img/table9.webp", 
-    category: "table" 
-  }, 
-  { 
-    name: "Farmhouse Dining Table", 
-    description: "Charming farmhouse-style dining table with a reclaimed wood look.", 
-    price: 699.99, 
-    picture: "/img/table7.webp", 
-    category: "table" 
-  }
-]
+    const productsToCreate = [
+      {
+        name: "BohemianBreeze",
+        description: "Bohemian-inspired woven rattan chair with a comfortable cushion.",
+        price: 199.99,
+        picture: "/img/chair2.jpg",
+        category: "chair"
+      },
+      {
+        name: "VersatileVanity",
+        description: "Elegant vanity chair with a padded seat and mirrored accents.",
+        price: 129.99,
+        picture: "/img/chair4.webp",
+        category: "chair"
+      },
+      {
+        name: "Grey Bliss",
+        description: "The grey sectional couch features a sleek and modern design, providing ample seating space for lounging and entertaining. Its plush cushions and adjustable backrests offer both comfort and versatility, making it a stylish and practical addition to any living room.",
+        price: 294.94,
+        picture: "/img/couch1.webp",
+        category: "couch"
+      },
+      {
+        name: "Modern Minimalist",
+        description: "The white minimal couch exudes a clean and minimalist aesthetic, characterized by its sleek lines and simplicity. With its understated elegance and neutral color, it effortlessly complements any interior decor while offering a comfortable and contemporary seating option.",
+        price: 599.99,
+        picture: "/img/couch2.webp",
+        category: "couch"
+      },
+      {
+        name: "Modern Table Lamp",
+        description: "Minimalist table lamp with a sleek design and touch-sensitive controls. With its modern design and adjustable brightness settings, it provides both ambient and task lighting, adding a touch of sophistication and versatility to any room.",
+        price: 79.99,
+        picture: "/img/light11.jpg",
+        category: "light"
+    },
+
+      {
+        name: "Elegant Chandelier",
+        description: "Crystal chandelier with intricate design and sparkling lights.",
+        price: 299.99,
+        picture: "/img/light12.webp",
+        category: "light"
+      },
+      {
+        name: "Glamorous Vanity Table",
+        description: "Glamorous vanity table with a mirrored surface and elegant design.",
+        price: 349.99,
+        picture: "/img/table11.webp",
+        category: "table"
+      },
+      {
+        name: "Minimalist Writing Desk",
+        description: "Minimalist writing desk with clean lines and a spacious work area.",
+        price: 299.99,
+        picture: "/img/table9.webp",
+        category: "table"
+      },
+      {
+        name: "Farmhouse Dining Table",
+        description: "Charming farmhouse-style dining table with a reclaimed wood look.",
+        price: 699.99,
+        picture: "/img/table7.webp",
+        category: "table"
+      }
+    ]
     const products = await Promise.all(productsToCreate.map(createProduct))
 
     console.log("products created:")

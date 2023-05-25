@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { addProductToCart } from '../api/cart';
 
 const AllProducts = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [products, setProducts] = useState([])
   useEffect(() => {
@@ -30,24 +30,36 @@ const AllProducts = () => {
     : products;
 
   return (
-    <div>
-      <div className="category">
-      <button onClick={() => onClick("chair")}>CHAIRS</button>
-        <button onClick={() => onClick("couch")}>COUCHES</button>
-        <button onClick={() => onClick("light")}>LIGHTS</button>
-        <button onClick={() => onClick("table")}>TABLES</button>
+    <div className='section'>
+      <div className="left">
+        <button className='category' onClick={() => onClick(null)}>SHOP ALL</button>
+        <button className='category' onClick={() => onClick("chair")}>CHAIRS</button>
+        <button className='category' onClick={() => onClick("couch")}>COUCHES</button>
+        <button className='category' onClick={() => onClick("light")}>LIGHTS</button>
+        <button className='category' onClick={() => onClick("table")}>TABLES</button>
+
       </div>
       <div>
         {filteredProducts.map((product) => {
           return (
-            <div key={product.id}>
-              <img style={{ height: "400px", }} src={product.picture} alt="" />
-              <p>{product.name}</p>
-              <p>Description: {product.description}</p>
-              <p>${product.price}</p>
-              <button onClick={() => onClick(addProductToCart(product.id))}>Add To Cart</button>
-              <button onClick={() => navigate(`/products/single/${product.id}`)}>View Product</button>
+            <div className='right'>
+              <div key={product.id} className='product-container'>
+                <img className='image' style={{ height: "400px" }} src={product.picture} alt="" />
+                <div className='info-container'>
+                  <p className='name'>{product.name}</p>
+                  <p className='description'>{product.description}</p>
+                  <div className='price-button-container'>
+                    <p className='price'>${product.price}</p>
+                    <div className='button-container'>
+                      <button className='button' onClick={() => onClick(addProductToCart(product.id))}>Add To Cart</button>
+                      <button className='button' onClick={() => navigate(`/products/single/${product.id}`)}>View Product</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+
           );
         })}
       </div>

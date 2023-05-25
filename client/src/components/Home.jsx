@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import '../styles/Home.css'
+const BASE_URL= "http://localhost:8080/api";
 
 const Home = () => {
     const [user, setUser] = useState({});

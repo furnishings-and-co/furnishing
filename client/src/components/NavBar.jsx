@@ -5,11 +5,12 @@ import { logout } from '../api/users'
 
 
 const NavBar = ({token, setToken, setUser, user}) => {
-    
+    console.log(token)
     const handleLogout = async (e) => {
         e.preventDefault();
         await logout(setToken, setUser);
       };    
+      console.log("usersusername", user.username)
     return (
         <div className='Navbar'>
             <img className="logo" src="./img/logo.png" />

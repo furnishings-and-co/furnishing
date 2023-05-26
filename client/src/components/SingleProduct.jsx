@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { GetProduct } from '../api/products';
 import { addProductToCart } from '../api/cart';
 
-const SingleProduct = () => {
+const SingleProduct = ({setCart}) => {
     const {id}= useParams()
    const navigate=useNavigate()
 
@@ -26,7 +26,9 @@ const SingleProduct = () => {
                   <p>$:{product.price}</p>
                   <img style={{height:"400px",}} src={product.picture} alt="" />
                   <button onClick={() => navigate('/products')}>back</button>
-                  <button onClick={() => onClick(addProductToCart(product.id))}>Add to cart</button>
+                  <button onClick={() =>{const updatedCart= addProductToCart(product.id)
+                  setCart(updatedCart)
+                }}>Add to cart</button>
                   
 
                   {/* <button onClick={

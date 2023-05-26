@@ -6,6 +6,7 @@ const dropTables = async () => {
   try {
     console.log('Starting to drop all tables...');
     await client.query(`
+    DROP TABLE IF EXISTS cart_products;
     DROP TABLE IF EXISTS purchased_items;
     DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS users;
@@ -40,9 +41,14 @@ async function createTables() {
       );
       CREATE TABLE cart (
         id SERIAL PRIMARY KEY,
-        "userId" INT REFERENCES users(id),
-        "productId" INT REFERENCES products(id),
-        quantity INT
+        "userId" INT REFERENCES users(id) NOT NULL,
+        "isActive" BOOLEAN DEFAULT true
+      );
+      CREATE TABLE cart_products(
+        id SERIAL PRIMARY KEY,
+        "cartId" INTEGER REFERENCES cart(id) NOT NULL,
+        "productId" INTEGER REFERENCES products(id) NOT NULL,
+        quantity INTEGER DEFAULT 1
       );
       CREATE TABLE purchased_items (
         id SERIAL PRIMARY KEY,

@@ -112,7 +112,6 @@ console.log("JWTSECRET", JWT_SECRET)
   `;
   console.log("payload", payload)
   const response = await client.query(SQL, [ payload.userId]);
-  console.log("response", response)
   if(!response.rows.length){
     const error = Error('not authorized');
     error.status = 401;

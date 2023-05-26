@@ -114,6 +114,37 @@ export const fetchMe = async (token) => {
 };
 
 /**
+ * Fetches the user's isAdmin value from the Database based on the provided username and password
+ * @param {string} username The username of the user
+ * @param {string} password The password of the user
+ * @return {Promise<boolean>} A Promise that resolves to the isAdmin value
+ */
+export const checkAdmin = async (username, password) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/admin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error fetching isAdmin value');
+    }
+
+    const data = await response.json();
+    const isAdmin = data.isAdmin;
+
+    return isAdmin;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+
+/**
  * Logs out the user by removing their JWT token from local storage and clearing their user data.
  * @param {function} setToken A state setter function to set the JWT token to null.
  * @param {function} setUser A state setter function to set the user data to an empty object.

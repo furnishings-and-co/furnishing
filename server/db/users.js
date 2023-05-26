@@ -126,11 +126,37 @@ console.log("JWTSECRET", JWT_SECRET)
   }
 }
 
+async function checkAdminByToken(token) {
+  try {
+    const user = await getUserByToken(token);
+
+    const SQL = `
+      SELECT *
+      FROM users
+      WHERE "isAdmin" = true
+    `;
+    const response = await client.query(SQL);
+    const users = response.rows;
+
+    if (user.isAdmin === true) {
+      console.log("User is an admin");
+      // Handle admin logic here
+      // You can also access the list of users with isAdmin = true from 'users' variable
+    } else {
+      console.log("User is not an admin");
+      // Handle non-admin logic here
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    // Handle error
+  }
+}
+
 module.exports = {
   createUser,
   getUser,
   getUserById,
   getUserByUsername,
-  getUserByToken
-  // isAdmin,
+  getUserByToken,
+  checkAdminByToken
 };

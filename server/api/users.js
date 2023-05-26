@@ -1,5 +1,5 @@
 const usersRouter = require('express').Router();
-const { createUser, getUserByUsername, getUser, getUserById, getUserByToken } = require('../db');
+const { createUser, getUserByUsername, getUser, getUserById, getUserByToken, checkAdminByToken } = require('../db');
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
@@ -52,10 +52,23 @@ usersRouter.get('/me', async (req, res, next) => {
   }catch(error){
     console.log(error)
   }
-})
+});
+
+// get /api/users/admin
+usersRouter.get('/admin', async (req, res, next) => {
+  const token = req.headers.authorization;
+
+  try {
+    await checkAdminByToken(token);
+    // You can perform additional logic or send a response if needed
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    next(error); // Pass the error to the error handler middleware
+  }
+});
 
 
-  
   // usersRouter.get("/:username/routines", async (req, res, next) => {
   //   try {
   //     const {username} = req.params;

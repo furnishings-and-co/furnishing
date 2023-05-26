@@ -4,39 +4,49 @@ import { GetProduct } from '../api/products';
 import { addProductToCart } from '../api/cart';
 
 const SingleProduct = () => {
-    const {id}= useParams()
-   const navigate=useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-        const [product, setProduct]=useState({})
-        
-            
-        useEffect(()=>{
-             async function getSingleProduct (){
-                const product= await GetProduct(id)
-            setProduct(product)}
-            getSingleProduct()
-            },[])
-            // console.log(product, "useEffect")
-            return (
-                <div 
-                
-                key={product.id}>
-                  <p>{product.name}</p>
-                  <p>Description: {product.description}</p>
-                  <p>$:{product.price}</p>
-                  <img style={{height:"400px",}} src={product.picture} alt="" />
-                  <button onClick={() => navigate('/products')}>back</button>
-                  <button onClick={() => onClick(addProductToCart(product.id))}>Add to cart</button>
-                  
+  const [product, setProduct] = useState({});
+  const [loading, setLoading] = useState(true);
 
-                  {/* <button onClick={
-                    async()=>{await addProductToCart(product.id);
-                navigate('/')}}
-                    >Delete</button> */}
-                </div>)
+  useEffect(() => {
+    async function getSingleProduct() {
+      try {
+        const product = await GetProduct(id);
+        setProduct(product);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
-}
-               
-        
+    getSingleProduct();
+  }, [id]);
+
+  const handleAddToCart = async () => {
+    try {
+      await addProductToCart(product.id);
+      navigate('/products');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <div key={product.id}>
+      <p>{product.name}</p>
+      <p>Description: {product.description}</p>
+      <p>$:{product.price}</p>
+      <img style={{ height: '400px' }} src={product.picture} alt="" />
+      <button onClick={() => navigate('/products')}>back</button>
+      <button onClick={handleAddToCart}>Add to cart</button>
+    </div>
+  );
+};
 
 export default SingleProduct;

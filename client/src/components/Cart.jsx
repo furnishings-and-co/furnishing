@@ -1,8 +1,9 @@
 import React from 'react';
-import { DisplayCart } from '../api/cart';
+import { deleteProductFromCart } from '../api/cart';
 import { useState, useEffect } from 'react';
+import { addCartToProfile } from '../api/purchased';
 
-const Cart = ({cart, setCart}) => {
+const Cart = ({cart, setCart, items, setItems}) => {
     // useEffect(() => {
     //   async function getCart() {
     //     const cart = await DisplayCart()
@@ -19,9 +20,11 @@ const Cart = ({cart, setCart}) => {
             return (
               <li>
                 {product.name}({product.quantity})
+                {product.price}
                 <button
                   onClick={async () => {
                     const updatedCart = await deleteProductFromCart(product.id);
+                    setCart(updatedCart)
                   }}
                 >
                   DELETE PRODUCT
@@ -32,14 +35,15 @@ const Cart = ({cart, setCart}) => {
         </ul>
         <button
           onClick={async () => {
-            const newCart = await purchaseCart();
+            console.log(cart.id)
+            const newCart = await addCartToProfile(cart.id)
+            setItems(newCart)
           }}
         >
           PURCHASE CART
         </button>
       </div>
-    );
-  };
+    );}
 //     if(cart){
 //     return (
 //         <div>

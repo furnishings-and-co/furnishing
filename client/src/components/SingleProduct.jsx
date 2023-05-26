@@ -26,7 +26,7 @@ const SingleProduct = ({setCart}) => {
                   <p>$:{product.price}</p>
                   <img style={{height:"400px",}} src={product.picture} alt="" />
                   <button onClick={() => navigate('/products')}>back</button>
-                  <button onClick={() =>{const updatedCart= addProductToCart(product.id)
+                  <button onClick={async() =>{const updatedCart= await addProductToCart(product.id)
                   setCart(updatedCart)
                 }}>Add to cart</button>
                   

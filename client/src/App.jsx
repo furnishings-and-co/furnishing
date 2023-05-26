@@ -10,6 +10,7 @@ function App() {
   const [user, setUser] = useState({});
   const [auth, setAuth] = useState({});
   const [cart, setCart] = useState({});
+  const [items, setItems] = useState([]);
 
   console.log("cart", cart);
   const attemptLogin = async () => {
@@ -53,7 +54,7 @@ useEffect(() => {
   return (
     <div className="App">
       <NavBar token={token} setToken={setToken} setUser={setUser} user={user}/>
-      <RRoutes cart={cart} setCart={setCart} token={token} setToken={setToken} setUser={setUser} user={user}/>
+      <RRoutes items={items} setItems={setItems} cart={cart} setCart={setCart} token={token} setToken={setToken} setUser={setUser} user={user}/>
       <Footer />
     </div>
   )

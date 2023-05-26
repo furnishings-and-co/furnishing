@@ -33,5 +33,6 @@ router.get('/health', async (req, res, next) => {
 router.use('/users', require('./users'));
 router.use('/products', require('./products'));
 router.use('/cart', require('./cart'));
+router.use('/purchased', require('./purchased'));
 
 module.exports = router;

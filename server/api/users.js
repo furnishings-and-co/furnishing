@@ -56,7 +56,7 @@ usersRouter.get('/me', async (req, res, next) => {
 
 // get /api/users/admin
 usersRouter.get('/admin', async (req, res, next) => {
-  const token = req.headers.authorization;
+  const token = req.headers.authorization.split(" ")[1]
 
   try {
     await checkAdminByToken(token);

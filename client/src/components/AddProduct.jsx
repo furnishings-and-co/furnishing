@@ -1,34 +1,19 @@
 import React, { useState } from "react";
+import { createAdminProduct } from "../api/admin";
 // import { createProduct } from "../../../server/db/products";
 const BASE_URL = "http://localhost:8080/api";
-const AddProduct = ({ token }) => {
+
+
+const AddProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [picture, setPicture] = useState("");
   const [category, setCategory] = useState("");
-  const handleAdd = async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/products/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to add product");
-      }
-      const createdProduct = await response.json();
-      console.log("Product created:", createdProduct);
-    } catch (error) {
-      console.error("Error:", error);
-      // Handle error
-    }
-  };
-  const handleSubmit = (e) => {
+ 
+const handleSubmit = async(e) => {
     e.preventDefault();
-    handleAdd();
+    await createAdminProduct(name, description, price, picture, category )
   };
   return (
     <form onSubmit={handleSubmit}>

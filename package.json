@@ -4,6 +4,7 @@
   "description": " E-commerce furnishing website",
   "main": "index.js",
   "scripts": {
+    "build": "(npm run build --prefix client)",
     "start": "node server/index.js",
     "server:dev": "nodemon server/index.js",
     "start:dev": "(npm run dev --prefix client) & nodemon server/index.js",
@@ -24,6 +25,7 @@
     "toastify": "^2.0.1"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.2.12",
     "nodemon": "^2.0.22"
   }
 }

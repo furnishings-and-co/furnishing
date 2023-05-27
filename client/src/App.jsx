@@ -3,7 +3,7 @@ import './App.css'
 import { RRoutes } from './components/Routes'
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
-const BASE_URL = "http://localhost:8080/api"
+const BASE_URL = "api";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));

@@ -20,7 +20,6 @@ const RemoveProduct = ({ id, token }) => {
       const result = await response.json();
       const removedProductId = await removeProduct(result.id);
 
-      console.log("Product removed:", removedProductId);
     } catch (error) {
       console.error("Error:", error);
       // Handle error

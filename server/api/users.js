@@ -1,8 +1,8 @@
 const usersRouter = require('express').Router();
-const { createUser, createCart, getUser, getUserById, getUserByToken, checkAdminByToken } = require('../db');
+const { createUser, createCart, getUser, getUserByToken, checkAdminByToken } = require('../db');
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
-const bcrypt = require("bcrypt");
+
 
 usersRouter.use((req, res, next) => {
   console.log("A request is being made to /users");
@@ -15,7 +15,6 @@ usersRouter.post('/register', async (req, res, next) => {
   try {
     // console.log("user.id", user.id)
     const { user, token } = await createUser(username, password);
-    console.log("req.body", req.body);
     const {cart} = await createCart(user.id);
     res.json({ user, token, cart});
   } catch (error) {
@@ -44,29 +43,23 @@ usersRouter.post('/login', async (req, res, next) => {
 
 
 // get /api/users/me
-// usersRouter.get('/me', async (req, res, next) => {
-//   console.log(req.headers)
-//   const token = req.headers.authorization.split(" ")[1]
-//   console.log("token", token);
-//   try {
-//       // get user by token
-//       console.log("made it into the try")
-//      const user = await getUserByToken(token);
-//      console.log("this is the user", user)
-//      res.send(user)
-//   }catch(error){
-//     console.log(error)
-//   }
-// });
+usersRouter.get('/me', async (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1]
+  try {
+      // get user by token
+     const user = await getUserByToken(token);
+     res.send(user)
+  }catch(error){
+    console.log(error)
+  }
+});
 
 // get /api/users/admin
 usersRouter.get("/admin", async (req, res, next) => {
-  console.log(req.headers)
   const token = req.headers.authorization.split(" ")[1];
 
   try {
     const isAdmin = await checkAdminByToken(token);
-    console.log(isAdmin)
     res.send(isAdmin); // Send the isAdmin value as the response
   } catch (error) {
     console.error(error);
@@ -74,27 +67,6 @@ usersRouter.get("/admin", async (req, res, next) => {
   }
 });
 
-
-  // usersRouter.get("/:username/routines", async (req, res, next) => {
-  //   try {
-  //     const {username} = req.params;
-  //     const token = req.headers.authorization?.split(" ")[1];
-  
-  //     const decodedToken = jwt.verify(token, JWT_SECRET);
-  //     const loggedInUsername = decodedToken.username;
-  
-  //     if (loggedInUsername === username) {
-  //       const routines = await getAllRoutinesByUser({username});
-  //       res.send(routines);
-  //     } else {
-  //       const routines = await getPublicRoutinesByUser({username});
-  //       res.send(routines);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     next(error);
-  //   }
-  // });
 
 module.exports = usersRouter;
 

@@ -17,15 +17,8 @@ router.use('/products', productRouter);
 // ROUTER: /api/cart
 const cartRouter = require('./cart');
 router.use('/cart', cartRouter);
+// ROUTER: /api/purchased
 const purchasedRouter= require('./purchased')
 router.use('/purchased', purchasedRouter)
-
-// ROUTER: /api/routines
-// const routinesRouter = require('./routines');
-// router.use('/routines', routinesRouter);
-
-// ROUTER: /api/routine_activities
-// const routineActivitiesRouter = require('./routineActivities');
-// router.use('/routine_activities', routineActivitiesRouter);
 
 module.exports = router;

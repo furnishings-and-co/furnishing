@@ -3,7 +3,7 @@ import { DisplayPurchased } from '../api/purchased';
 import { useEffect } from 'react';
 import '../styles/Profile.css'
 
-const Profile = ({ cart, setCart, items, setItems }) => {
+const Profile = ({ items, setItems }) => {
 
 
   useEffect(() => {
@@ -12,7 +12,6 @@ const Profile = ({ cart, setCart, items, setItems }) => {
       const cart = JSON.parse(cartString);
 
       if (cart && cart.id) {
-        console.log("cart id", cart.id);
         const updatedProfile = await DisplayPurchased(cart.id);
         setItems(updatedProfile);
       }

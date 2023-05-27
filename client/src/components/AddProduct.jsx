@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { createAdminProduct } from "../api/admin";
-// import { createProduct } from "../../../server/db/products";
-const BASE_URL = "http://localhost:8080/api";
+
 
 
 const AddProduct = () => {

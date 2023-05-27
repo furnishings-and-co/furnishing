@@ -3,20 +3,17 @@ const {
     getAllProducts,
     getProductsById,
     getProductsByCategory,
-    addProductToCart,
     createProduct,
     editProduct,
     removeProduct
   } = require('../db');
 const productRouter = express.Router();
-const jwt = require('jsonwebtoken');
-const {JWT_SECRET} = process.env 
+
 
 // api/products
 productRouter.get("/", async (req, res, next) => {
     try {
       const products = await getAllProducts();
-      console.log(products);
       res.send(products);
     } catch (error) {
       console.log(error);
@@ -26,10 +23,8 @@ productRouter.get("/", async (req, res, next) => {
 
 productRouter.get("/:category", async (req, res, next) => {
     const { category } = req.params;
-   console.log (category, "hello")
     try {
       const productCategory = await getProductsByCategory(category);
-  console.log(productCategory)
       res.send(productCategory);
     } catch (error) {
       next(error);
@@ -38,7 +33,6 @@ productRouter.get("/:category", async (req, res, next) => {
 
   productRouter.get("/single/:id", async (req, res, next) => {
     const { id } = req.params;
-  console.log(id, "productID")
     try {
       const singleProduct = await getProductsById(id);
       res.send(singleProduct);
@@ -75,7 +69,6 @@ productRouter.put("/:id", async (req, res, next) => {
       picture,
       category
     );
-    console.log("Product updated:", updatedProduct);
     res.sendStatus(204);
   } catch (error) {
     next(error);
@@ -86,7 +79,6 @@ productRouter.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
     const removedProductId = await removeProduct(id);
-    console.log("Product removed:", removedProductId);
     res.sendStatus(204);
   } catch (error) {
     next(error);

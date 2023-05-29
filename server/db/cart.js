@@ -81,12 +81,43 @@ const deleteProductFromCart = async ({ cartId, productId }) => {
   await client.query(SQL, [productId, cartId]);
   return;
 };
+const addCartToHistory = async ({cartId}) => {
+  try {
+    // Insert products from cart_products into purchased_items
+    console.log("cartId in funciton", cartId)
+    const result = await client.query(`
+      INSERT INTO purchased_items ("cartId", "productId", quantity)
+      SELECT "cartId", "productId", quantity
+      FROM cart_products
+      WHERE "cartId" = $1
+      RETURNING *
+    `, [cartId]);
+    // console.log("history cart", result)
+
+    console.log(`Added ${result.rowCount} products to purchased_items.`);
+  } catch (error) {
+    console.error('Error adding products to purchased_items:', error);
+  }
+}
+
+const purchaseCart = async ({ cartId, userId }) => {
+  const SQL = `
+  UPDATE carts
+  SET is_active = false
+  WHERE id = $1
+  `;
+  await client.query(SQL, [cartId]);
+  const newCart = await createCart({ userId });
+  return newCart;
+};
 
   module.exports = {
    createCart,
    getCartByUserId,
    addProductToCart,
-   deleteProductFromCart
+   deleteProductFromCart,
+   purchaseCart,
+   addCartToHistory
   };
 
 

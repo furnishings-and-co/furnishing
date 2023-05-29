@@ -6,18 +6,19 @@ const dropTables = async () => {
   try {
     console.log('Starting to drop all tables...');
     await client.query(`
-    DROP TABLE IF EXISTS cart_products;
-    DROP TABLE IF EXISTS purchased_items;
-    DROP TABLE IF EXISTS cart;
-    DROP TABLE IF EXISTS users;
-    DROP TABLE IF EXISTS products;
+      DROP TABLE IF EXISTS purchased_items CASCADE;
+      DROP TABLE IF EXISTS cart_products CASCADE;
+      DROP TABLE IF EXISTS cart CASCADE;
+      DROP TABLE IF EXISTS products CASCADE;
+      DROP TABLE IF EXISTS users CASCADE;
     `);
-    console.log('Finished droppping all tables successfully!');
+    console.log('Finished dropping all tables successfully!');
   } catch (error) {
     console.error('Error dropping tables');
     throw error;
   }
 };
+
 
 async function createTables() {
   // create all tables, in the correct order
@@ -52,13 +53,11 @@ async function createTables() {
       );
       CREATE TABLE purchased_items (
         id SERIAL PRIMARY KEY,
-        name VARCHAR(255) UNIQUE NOT NULL,
-        price DECIMAL(10, 2),
-        description TEXT NOT NULL,
-        picture TEXT NOT NULL,
-        "userId" INTEGER REFERENCES users (id),
-        "productId" INTEGER REFERENCES products (id)
-      );
+        "cartId" INTEGER REFERENCES cart(id) NOT NULL,
+        "productId" INTEGER REFERENCES products(id) NOT NULL,
+        quantity INTEGER DEFAULT 1,
+        purchased_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );      
     `);
 
     console.log("Finished building tables!");

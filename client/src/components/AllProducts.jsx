@@ -9,7 +9,7 @@ import { productsToMap } from '../api/data';
 import { useNavigate } from 'react-router-dom';
 import { addProductToCart } from '../api/cart';
 
-const AllProducts = () => {
+const AllProducts = ({cart, setCart}) => {
   const navigate = useNavigate()
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [products, setProducts] = useState([])
@@ -40,28 +40,31 @@ const AllProducts = () => {
 
       </div>
       <div>
-        {filteredProducts.map((product) => {
-          return (
-            <div className='right'>
-              <div key={product.id} className='product-container'>
-                <img className='image' style={{ height: "400px" }} src={product.picture} alt="" />
-                <div className='info-container'>
-                  <p className='name'>{product.name}</p>
-                  <p className='description'>{product.description}</p>
-                  <div className='price-button-container'>
-                    <p className='price'>${product.price}</p>
-                    <div className='button-container'>
-                      <button className='button' onClick={() => onClick(addProductToCart(product.id))}>Add To Cart</button>
-                      <button className='button' onClick={() => navigate(`/products/single/${product.id}`)}>View Product</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      {filteredProducts.map((product) => {
+  return (
+    <div className='right' key={product.id}>
+      <div className='product-container'>
+        <img className='image' style={{ height: "400px" }} src={product.picture} alt="" />
+        <div className='info-container'>
+          <p className='name'>{product.name}</p>
+          <p className='description'>{product.description}</p>
+          <div className='price-button-container'>
+            <p className='price'>${product.price}</p>
+            <div className='button-container'>
+              <button onClick={async () => {
+                const updatedCart = await addProductToCart(product.id);
+                setCart(updatedCart);
+              }}>Add to cart</button>
+              <button className='button' onClick={() => navigate(`/products/single/${product.id}`)}>View Product</button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+})}
 
 
-          );
-        })}
       </div>
     </div>
   );

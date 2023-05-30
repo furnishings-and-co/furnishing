@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { loginUser } from "../api/users";
 import { registerUser } from "../api/users";
 import { useNavigate } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
 import "../styles/Login.css";
 
 const Login = ({ setToken, onClose }) => {

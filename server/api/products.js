@@ -3,7 +3,10 @@ const {
     getAllProducts,
     getProductsById,
     getProductsByCategory,
-    addProductToCart
+    addProductToCart,
+    createProduct,
+    editProduct,
+    removeProduct
   } = require('../db');
 const productRouter = express.Router();
 const jwt = require('jsonwebtoken');
@@ -43,5 +46,51 @@ productRouter.get("/:category", async (req, res, next) => {
       next(error);
     }
   });
+
+  // POST /api/products
+productRouter.post('/create', async (req, res) => {
+  try {
+    const { name, description, price, picture, category } = req.body;
+
+    // Call the createProduct function from the backend
+    const createdProduct = await createProduct({ name, description, price, picture, category });
+
+    // Send the created product as the response
+    res.status(201).json(createdProduct);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to create product' });
+  }
+});
+
+productRouter.put("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const { name, description, price, picture, category } = req.body;
+  try {
+    const updatedProduct = await editProduct(
+      id,
+      name,
+      description,
+      price,
+      picture,
+      category
+    );
+    console.log("Product updated:", updatedProduct);
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
+
+productRouter.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const removedProductId = await removeProduct(id);
+    console.log("Product removed:", removedProductId);
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = productRouter;

@@ -1,5 +1,5 @@
 const usersRouter = require('express').Router();
-const { createUser, getUserByUsername, getUser, getUserById, getUserByToken, checkAdminByToken } = require('../db');
+const { createUser, createCart, getUser, getUserById, getUserByToken } = require('../db');
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
@@ -10,11 +10,14 @@ usersRouter.use((req, res, next) => {
 });
 
 // post /api/users/register
-usersRouter.post('/register', async (req, res, next) => {
-  const { username, password } = req.body;
+usersRouter.post('/register', async (req, res, next) => { 
+  const { username, password} = req.body;
   try {
+    // console.log("user.id", user.id)
     const { user, token } = await createUser(username, password);
-    res.json({ user, token });
+    console.log("req.body", req.body);
+    const {cart} = await createCart(user.id);
+    res.json({ user, token, cart});
   } catch (error) {
     console.error('Error creating user', error);
     next(error);
@@ -26,11 +29,12 @@ usersRouter.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
   try {
     const user = await getUser(username, password);
+    const {cart} = await createCart(user.id);
     if (!user) {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
     const token = jwt.sign({ userId: user.id }, JWT_SECRET);
-    res.json({ user, token });
+    res.json({ user, token, cart });
   } catch (error) {
     console.error('Error during login', error);
     next(error);

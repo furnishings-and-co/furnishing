@@ -18,7 +18,7 @@ const NavBar = ({token, setToken, setUser, user}) => {
                 <Link className='Link' to="/" >Home</Link>
                 <Link className='Link' to="/products">Shop</Link>
                 <Link className='Link' to="/cart">Cart</Link>
-                {token ? <Link className='Link' to="/products/me">Profile</Link> : null}
+                {token ? <Link className='Link' to="/profile">Profile</Link> : null}
                 {!token ? <Link className='Link' to="/login">Login</Link> : null}
                 {token ? <button onClick={handleLogout}>LOGOUT</button> : null}
             </ul>

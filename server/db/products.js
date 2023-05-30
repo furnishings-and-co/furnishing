@@ -1,5 +1,4 @@
 const client = require('./client')
-// const { isAdmin } = require("./users")
 
 
 async function createProduct({ name, description, price, picture, category }) {

@@ -17,6 +17,8 @@ router.use('/products', productRouter);
 // ROUTER: /api/cart
 const cartRouter = require('./cart');
 router.use('/cart', cartRouter);
+const purchasedRouter= require('./purchased')
+router.use('/purchased', purchasedRouter)
 
 // ROUTER: /api/routines
 // const routinesRouter = require('./routines');

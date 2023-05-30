@@ -1,26 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import "../styles/NavBar.css"
 import { logout } from '../api/users'
+import Login from './Login';
 
 
-const NavBar = ({token, setToken, setUser, user}) => {
-    console.log(token)
+const NavBar = ({ token, setToken, setUser, user }) => {
+    const [showLoginModal, setShowLoginModal] = useState(false)
+    const [activeLink, setActiveLink] = useState(false)
+
     const handleLogout = async (e) => {
         e.preventDefault();
         await logout(setToken, setUser);
-      };    
-      console.log("usersusername", user.username)
+    };
+
+    const handleLoginModalClose = () => {
+        setShowLoginModal(false);
+    };
+
+    const handleLoginModalOpen = () => {
+        setShowLoginModal(true);
+    };
+    const handleLinkClick = (link) => {
+        setActiveLink(link)
+    }
+
     return (
         <div className='Navbar'>
             <img className="logo" src="./img/logo.png" />
             <ul className='Links'>
-                <Link className='Link' to="/" >Home</Link>
-                <Link className='Link' to="/products">Shop</Link>
-                <Link className='Link' to="/cart">Cart</Link>
-                {token ? <Link className='Link' to="/profile">Profile</Link> : null}
-                {!token ? <Link className='Link' to="/login">Login</Link> : null}
-                {token ? <button onClick={handleLogout}>LOGOUT</button> : null}
+                <Link className={activeLink === "home" ? "active" : ""} 
+                onClick={() => handleLinkClick("home")}
+                to="/" >Home</Link>
+                <Link className={activeLink === "shop" ? "active" : ""} 
+                onClick={() => handleLinkClick("shop")}
+                 to="/products">Shop</Link>
+                <Link className={activeLink === "cart" ? "active" : ""} 
+                onClick={() => handleLinkClick("cart")}
+                 to="/cart">Cart</Link>
+                {token ? <Link className={activeLink === "profile" ? "active" : ""} 
+                onClick={() => handleLinkClick("profile")} 
+                to="/profile">Profile</Link> : null}
+                {token ? (<p className="usernameN">{user.username}</p>) : (<button className='button' onClick={handleLoginModalOpen}>LOGIN</button>)}
+                {showLoginModal && (
+                    <div className="modal">
+                        <div className="modal-content">
+                            <Login
+                                setToken={setToken}
+                                setUser={setUser}
+                                onClose={handleLoginModalClose}
+                                />
+                        </div>
+                    </div>
+                )}
+                {token ? <button className='button' onClick={handleLogout}>LOGOUT</button> : null}
             </ul>
 
         </div>

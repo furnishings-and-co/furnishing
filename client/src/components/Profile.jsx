@@ -25,9 +25,10 @@ const Profile = ({cart, setCart, items, setItems}) => {
         <ul>
           {items.map((item) => (
             <li key={item.id}>
-              <p>Item ID: {item.id}</p>
-              <p>Cart ID: {item.cartId}</p>
-              <p>Product ID: {item.productId}</p>
+              <img className='image' style={{ height: "400px" }} src={item.picture} alt="" />
+              <p>{item.name}</p>
+              <p>{item.description}</p>
+              <p>${item.price}</p>
               <p>Quantity: {item.quantity}</p>
               <p>Purchased At: {item.purchased_at}</p>
             </li>

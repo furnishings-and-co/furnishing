@@ -86,10 +86,10 @@
   .price:hover{
     cursor:default;
   }
-  .button{
+  .aButton{
     font-family: Arial,Helvetica,sans-serif;
-    
   }
-  .button:hover{
+  .aButton:hover{
     cursor: pointer;
+    background-color: none;
   }

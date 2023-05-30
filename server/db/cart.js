@@ -25,29 +25,11 @@ const getCartByUserId = async ({ id }) => {
     LEFT JOIN products ON cart_products."productId" = products."id"
     WHERE cart_products."cartId" = $1
     `;
+    console.log("response in getcartby user", id)
     const productsResponse = await client.query(productsSQL, [cart.id]);
     cart.products = productsResponse.rows;
     return cart;
   };
-
-//   async function addProductToCart(userId, productId, quantity) {
-//   try {
-//     const {
-//       rows: [selectedItem],
-//     } = await client.query(
-//       `
-//       INSERT INTO cart ("userId")
-//       VALUES ($1, $2, $3)
-//       RETURNING *;
-//     `,
-//       [userId, productId, quantity]
-//     );
-//       console.log(selectedItem)
-//     return selectedItem;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 
 const addProductToCart = async ({ cartId, productId }) => {
   // check if product is already in cart
@@ -78,6 +60,7 @@ const deleteProductFromCart = async ({ cartId, productId }) => {
     DELETE FROM cart_products
     WHERE "cartId" = $2 AND "productId" = $1
   `;
+  // if rows.length use line 61
   await client.query(SQL, [productId, cartId]);
   return;
 };
@@ -100,14 +83,14 @@ const addCartToHistory = async ({cartId}) => {
   }
 }
 
-const purchaseCart = async ({ cartId, userId }) => {
+const clearCart = async ({ cartId, userId }) => {
   const SQL = `
-  UPDATE carts
-  SET is_active = false
+  UPDATE cart
+  SET "isActive" = false
   WHERE id = $1
   `;
   await client.query(SQL, [cartId]);
-  const newCart = await createCart({ userId });
+  const newCart = await createCart(userId);
   return newCart;
 };
 
@@ -116,36 +99,8 @@ const purchaseCart = async ({ cartId, userId }) => {
    getCartByUserId,
    addProductToCart,
    deleteProductFromCart,
-   purchaseCart,
-   addCartToHistory
+   addCartToHistory,
+   clearCart
   };
 
 
-// async function removeProductFromCart({ productId }) {
-//   try {
-//     // Delete product from cart
-//      const {rows} = await client.query(
-//       `
-//       DELETE FROM cart
-//       WHERE "productId" = $1
-//       RETURNING *;
-//     `,
-//       [productId]
-//     );
-//     return rows;
-//   } catch (error) {
-//     await client.query("ROLLBACK");
-//     console.log(error);
-//   }
-// }
-
-// async function clearCart() {
-//   try {
-//     const {rows} = await client.query(`TRUNCATE cart`);
-//     return rows;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
-//   module.exports = {getCart, removeProductFromCart, clearCart, addProductToCart};

@@ -12,7 +12,7 @@ export const RRoutes = ({token, setToken, user, setUser, cart, setCart, items, s
         <div>
             <Routes>
                 <Route path= "/" element= {<Home token={token} setToken={setToken} setUser={setUser} user={user}/>}></Route>
-                <Route path="/products" element={<AllProducts cart={cart} setCart={setCart} token={token} setToken={setToken} setUser={setUser} user={user}/>}> </Route>
+                <Route path="/products" element={<AllProducts setCart={setCart} token={token} setToken={setToken} setUser={setUser} user={user}/>}> </Route>
                 <Route path="/login" element={<Login token={token} setToken={setToken} setUser={setUser} user={user}/>}></Route>
                 <Route path="/cart" element={<Cart items={items} setItems={setItems} cart={cart} setCart={setCart} token={token} setToken={setToken} setUser={setUser} user={user}/>}></Route>
                 <Route path="/profile" element={<Profile items={items} setItems={setItems} cart={cart} setCart={setCart} token={token} setToken={setToken} setUser={setUser} user={user}/>}></Route>

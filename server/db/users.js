@@ -139,15 +139,14 @@ async function checkAdminByToken(token) {
 
     if (user.isAdmin === true) {
       console.log("User is an admin");
-      // Handle admin logic here
-      // You can also access the list of users with isAdmin = true from 'users' variable
+      return true; // User is an admin
     } else {
       console.log("User is not an admin");
-      // Handle non-admin logic here
+      return false; // User is not an admin
     }
   } catch (error) {
     console.error("Error:", error);
-    // Handle error
+    throw error; // Rethrow the error
   }
 }
 

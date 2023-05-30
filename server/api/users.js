@@ -59,13 +59,13 @@ usersRouter.get('/me', async (req, res, next) => {
 });
 
 // get /api/users/admin
-usersRouter.get('/admin', async (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1]
+usersRouter.get("/admin", async (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
 
   try {
-    await checkAdminByToken(token);
-    // You can perform additional logic or send a response if needed
-    res.sendStatus(200);
+    const isAdmin = await checkAdminByToken(token);
+    console.log(isAdmin)
+    res.send(isAdmin); // Send the isAdmin value as the response
   } catch (error) {
     console.error(error);
     next(error); // Pass the error to the error handler middleware

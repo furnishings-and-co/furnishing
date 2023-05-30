@@ -4,6 +4,20 @@ const { addCartToHistory, getUserByToken, getAllPurchased } = require('../db');
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 
+purchasedRouter.get("/:cartId", async (req, res, next) => {
+  try {
+      console.log("getting to purchased router")
+  const { cartId } = req.params;
+  console.log("cartID", cartId)
+    const purchased_items = await getAllPurchased(cartId);
+    console.log(purchased_items);
+    res.send(purchased_items);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 purchasedRouter.post('/:cartId', async (req, res) => {
     console.log("getting to purchased router")
     const { cartId } = req.params;
@@ -18,20 +32,5 @@ purchasedRouter.post('/:cartId', async (req, res) => {
     const cart = await addCartToHistory({ cartId });
     res.send(cart);
   });
-
-  purchasedRouter.get("/:cartId", async (req, res, next) => {
-    try {
-        console.log("getting to purchased router")
-    const { cartId } = req.params;
-    console.log("cartID", cartId)
-      const purchased_items = await getAllPurchased(cartId);
-      console.log(purchased_items);
-      res.send(purchased_items);
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  });
-  
   
   module.exports = purchasedRouter;

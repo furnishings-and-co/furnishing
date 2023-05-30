@@ -18,7 +18,7 @@ const Login = ({ setToken, onClose }) => {
     setToken(token);
     setUsername("");
     setPassword("");
-    // onClose(false)
+    onClose(false)
   };
 
   const handleLogin = async (e) => {
@@ -31,7 +31,7 @@ const Login = ({ setToken, onClose }) => {
 
     if (token) {
       navigate("/products/me");
-      // onClose(false);
+      onClose(false);
     }
   };
 

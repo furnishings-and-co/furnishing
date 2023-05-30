@@ -1,5 +1,5 @@
 import React from 'react';
-import { deleteProductFromCart } from '../api/cart';
+import { deleteProductFromCart, clearCart } from '../api/cart';
 import { useState, useEffect } from 'react';
 import { addCartToProfile } from '../api/purchased';
 
@@ -14,35 +14,39 @@ const Cart = ({cart, setCart, items, setItems}) => {
 
     return (
       <div>
-        <h2>My products:</h2>
-        <ul>
-          {cart.products?.map((product) => {
-            return (
-              <li>
-                {product.name}({product.quantity})
-                {product.price}
-                <button
-                  onClick={async () => {
-                    const updatedCart = await deleteProductFromCart(product.id);
-                    setCart(updatedCart)
-                  }}
-                >
-                  DELETE PRODUCT
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-        <button
-          onClick={async () => {
-            console.log(cart.id)
-            const newCart = await addCartToProfile(cart.id)
-            setItems(newCart)
-          }}
-        >
-          PURCHASE CART
-        </button>
-      </div>
+      <h2>My products:</h2>
+      {cart.products?.map((product) => {
+        return (
+          <div key={product.id} className="single-product-container">
+            <img className="single-product-image" src={product.picture} alt="" />
+            <div className="single-product-details">
+              <p>{product.name}</p>
+              <p>{product.quantity}</p>
+              <p>{product.price}</p>
+              <button
+                onClick={async () => {
+                  const updatedCart = await deleteProductFromCart(product.id);
+                  setCart(updatedCart);
+                }}
+              >
+                DELETE PRODUCT
+              </button>
+            </div>
+          </div>
+        );
+      })}
+      <button
+        onClick={async () => {
+          console.log(cart.id);
+          const newCart = await addCartToProfile(cart.id);
+          setItems(newCart);
+          // const clear = await clearCart();
+          // setCart(clear);
+        }}
+      >
+        PURCHASE CART
+      </button>
+    </div>
     );}
 //     if(cart){
 //     return (

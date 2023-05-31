@@ -108,22 +108,27 @@ export const fetchMe = async (token) => {
 /*
  Fetches the user's isAdmin value from the Database based on the provided username and password
  */
-export const checkAdmin = async (username, password) => {
+export const checkAdmin = async () => {
+  const token = window.localStorage.getItem('token');
+  console.log("token in cart api front", token)
+  if (!token) {
+    return;
+  }
   try {
     const response = await fetch(`${BASE_URL}/users/admin`, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ username, password }),
     });
 
     if (!response.ok) {
       throw new Error('Error fetching isAdmin value');
     }
 
-    const data = await response.json();
-    const isAdmin = data.isAdmin;
+    const isAdmin = await response.json();
+    
 
     return isAdmin;
   } catch (error) {

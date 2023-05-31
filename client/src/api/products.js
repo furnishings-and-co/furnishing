@@ -110,8 +110,13 @@ export async function updateProduct(
 }
 
 export async function deleteProduct(id) {
+  const token = window.localStorage.getItem('token');
+  console.log("token in cart api front", token)
+  if (!token) {
+    return;
+  }
   try {
-    const response = await fetch(`${BASE_URL}/${id}`, {
+    const response = await fetch(`${BASE_URL}/products/${id}`, {
       method: "DELETE",
     });
     return response.status === 204;

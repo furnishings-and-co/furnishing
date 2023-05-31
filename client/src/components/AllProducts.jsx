@@ -8,12 +8,20 @@ import { addProductToCart } from '../api/cart';
 import { checkAdmin } from '../api/users';
 import AddProduct from './AddProduct';
 
-const AllProducts = ({ cart, setCart }) => {
+const AllProducts = ({ cart, setCart, admin, setAdmin }) => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [products, setProducts] = useState([]);
   const [showAddProductForm, setShowAddProductForm] = useState(false); // Track the visibility of the form
-
+  
+  
+  useEffect(() => {
+  const useAdmin= async() => {
+     const isAdmin = await checkAdmin();
+     setAdmin(isAdmin)
+  };
+useAdmin()
+}, []);
   useEffect(() => {
     async function getProducts() {
       const products = await DisplayProducts();
@@ -33,12 +41,13 @@ const AllProducts = ({ cart, setCart }) => {
   const handleAddProduct = () => {
     setShowAddProductForm(true);
   };
+  
 
   const handleAddToCart = async (productId) => {
     const updatedCart = await addProductToCart(productId);
     setCart(updatedCart);
   };
-
+  if(admin){
   return (
     <div className='section'>
       <div className="left">
@@ -76,7 +85,42 @@ const AllProducts = ({ cart, setCart }) => {
         })}
       </div>
     </div>
-  );
+  );}
+
+  else{
+    return (
+      <div className='section'>
+        <div className="left">
+          <button className='category' onClick={() => onClick(null)}>SHOP ALL</button>
+          <button className='category' onClick={() => onClick("chair")}>CHAIRS</button>
+          <button className='category' onClick={() => onClick("couch")}>COUCHES</button>
+          <button className='category' onClick={() => onClick("light")}>LIGHTS</button>
+          <button className='category' onClick={() => onClick("table")}>TABLES</button>
+        </div>
+        <div>
+          {filteredProducts.map((product) => {
+            return (
+              <div className='right'>
+                <div key={product.id} className='product-container'>
+                  <img className='image' style={{ height: "400px" }} src={product.picture} alt="" />
+                  <div className='info-container'>
+                    <p className='name'>{product.name}</p>
+                    <p className='description'>{product.description}</p>
+                    <div className='price-button-container'>
+                      <p className='price'>${product.price}</p>
+                      <div className='button-container'>
+                        <button className='aButton' onClick={() => navigate(`/products/single/${product.id}`)}>View Product</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default AllProducts;

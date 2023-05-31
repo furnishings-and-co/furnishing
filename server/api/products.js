@@ -48,7 +48,7 @@ productRouter.get("/:category", async (req, res, next) => {
   });
 
   // POST /api/products
-productRouter.post('/create', async (req, res) => {
+productRouter.post('/admin/create', async (req, res) => {
   try {
     const { name, description, price, picture, category } = req.body;
 

@@ -1,5 +1,5 @@
 const usersRouter = require('express').Router();
-const { createUser, createCart, getUser, getUserById, getUserByToken } = require('../db');
+const { createUser, createCart, getUser, getUserById, getUserByToken, checkAdminByToken } = require('../db');
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
@@ -44,22 +44,24 @@ usersRouter.post('/login', async (req, res, next) => {
 
 
 // get /api/users/me
-usersRouter.get('/me', async (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1]
-  console.log("token", token);
-  try {
-      // get user by token
-      console.log("made it into the try")
-     const user = await getUserByToken(token);
-     console.log("this is the user", user)
-     res.send(user)
-  }catch(error){
-    console.log(error)
-  }
-});
+// usersRouter.get('/me', async (req, res, next) => {
+//   console.log(req.headers)
+//   const token = req.headers.authorization.split(" ")[1]
+//   console.log("token", token);
+//   try {
+//       // get user by token
+//       console.log("made it into the try")
+//      const user = await getUserByToken(token);
+//      console.log("this is the user", user)
+//      res.send(user)
+//   }catch(error){
+//     console.log(error)
+//   }
+// });
 
 // get /api/users/admin
 usersRouter.get("/admin", async (req, res, next) => {
+  console.log(req.headers)
   const token = req.headers.authorization.split(" ")[1];
 
   try {

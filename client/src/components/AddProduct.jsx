@@ -1,64 +1,83 @@
-import React from "react";
-import { createProduct } from "../../../server/db";
-
+import React, { useState } from "react";
+// import { createProduct } from "../../../server/db/products";
 const BASE_URL = "http://localhost:8080/api";
-
-const AddProduct = ({ token, name, description, price, picture, category }) => {
+const AddProduct = ({ token }) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [picture, setPicture] = useState("");
+  const [category, setCategory] = useState("");
   const handleAdd = async () => {
     try {
-      const newProduct = {
-        name,
-        description,
-        price,
-        picture,
-        category,
-      };
-
-      const response = await fetch(`${BASE_URL}/products`, {
+      const response = await fetch(`${BASE_URL}/products/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(newProduct),
       });
-
       if (!response.ok) {
         throw new Error("Failed to add product");
       }
-
       const createdProduct = await response.json();
-
       console.log("Product created:", createdProduct);
     } catch (error) {
       console.error("Error:", error);
       // Handle error
     }
   };
-
-  const createProductAndHandleAdd = async () => {
-    try {
-      const createdProduct = await createProduct({
-        name,
-        description,
-        price,
-        picture,
-        category,
-      });
-
-      console.log("Product created:", createdProduct);
-
-      // Call handleAdd after createProduct to perform additional logic if needed
-      handleAdd();
-    } catch (error) {
-      console.error("Error:", error);
-      // Handle error
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleAdd();
   };
-
-  createProductAndHandleAdd();
-
-  return <button>Add Product</button>;
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Name:</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Description:</label>
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        ></textarea>
+      </div>
+      <div>
+        <label>Price:</label>
+        <input
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Picture:</label>
+        <input
+          type="text"
+          value={picture}
+          onChange={(e) => setPicture(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Category:</label>
+        <input
+          type="text"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          required
+        />
+      </div>
+      <button type="submit">Add Product</button>
+    </form>
+  );
 };
-
 export default AddProduct;

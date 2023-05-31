@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
-import { DisplayProducts } from '../api/products'
+import { DisplayProducts } from '../api/products';
 import { useEffect } from 'react';
+import "../styles/Products.css";
+import { productsToMap } from '../api/data';
 import { useNavigate } from 'react-router-dom';
 import { addProductToCart } from '../api/cart';
-import "../styles/Products.css"
+import { checkAdmin } from '../api/users';
+import AddProduct from './AddProduct';
 
-const AllProducts = ({ setCart }) => {
-  const navigate = useNavigate()
+const AllProducts = ({ cart, setCart }) => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
+  const [showAddProductForm, setShowAddProductForm] = useState(false); // Track the visibility of the form
 
   useEffect(() => {
     async function getProducts() {
-      const products = await DisplayProducts()
-      setProducts(products)
+      const products = await DisplayProducts();
+      setProducts(products);
     }
     getProducts();
-  }, [])
-  // const navigate=useNavigate
+  }, []);
+
   const onClick = (category) => {
     setSelectedCategory(category);
   };
@@ -25,6 +29,15 @@ const AllProducts = ({ setCart }) => {
   const filteredProducts = selectedCategory
     ? products.filter((product) => product.category === selectedCategory)
     : products;
+
+  const handleAddProduct = () => {
+    setShowAddProductForm(true);
+  };
+
+  const handleAddToCart = async (productId) => {
+    const updatedCart = await addProductToCart(productId);
+    setCart(updatedCart);
+  };
 
   return (
     <div className='section'>
@@ -34,7 +47,12 @@ const AllProducts = ({ setCart }) => {
         <button className='category' onClick={() => onClick("couch")}>COUCHES</button>
         <button className='category' onClick={() => onClick("light")}>LIGHTS</button>
         <button className='category' onClick={() => onClick("table")}>TABLES</button>
-
+        {checkAdmin() && (
+          <>
+            <button className='category' onClick={handleAddProduct}>ADD PRODUCT</button>
+            {showAddProductForm && <AddProduct />}
+          </>
+        )}
       </div>
       <div>
         {filteredProducts.map((product) => {
@@ -61,4 +79,4 @@ const AllProducts = ({ setCart }) => {
   );
 }
 
-export default AllProducts
+export default AllProducts;

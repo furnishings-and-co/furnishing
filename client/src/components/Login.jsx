@@ -30,7 +30,7 @@ const Login = ({ setToken, onClose }) => {
     setPassword("");
 
     if (token) {
-      navigate("/products/me");
+      navigate("/");
       onClose(false);
     }
   };

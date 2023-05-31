@@ -3,11 +3,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-/**
- * Registers a new user with the API.
- * @param {string} username The desired username for the new user.
- * @param {string} password The desired password for the new user.
- * @returns {Promise<string>} The JWT token for the newly registered user.
+/*
+Registers a new user with the API.
  */
 export const registerUser = async (username, password) => {
   try {
@@ -47,11 +44,8 @@ export const registerUser = async (username, password) => {
 };
 
 
-/**
- * Logs in an existing user with the API.
- * @param {string} username The username of the existing user.
- * @param {string} password The password of the existing user.
- * @returns {Promise<string>} The JWT token for the logged-in user.
+/*
+Logs in an existing user with the API.
  */
 export const loginUser = async (username, password) => {
   try {
@@ -92,10 +86,8 @@ export const loginUser = async (username, password) => {
 };
 
 
-/**
- * Fetches the details of the currently logged-in user from the API.
- * @param {string} token The JWT token for the logged-in user.
- * @returns {Promise<Object>} The user object.
+/*
+ Fetches the details of the currently logged-in user from the API.
  */
 export const fetchMe = async (token) => {
   try {
@@ -113,11 +105,8 @@ export const fetchMe = async (token) => {
   }
 };
 
-/**
- * Fetches the user's isAdmin value from the Database based on the provided username and password
- * @param {string} username The username of the user
- * @param {string} password The password of the user
- * @return {Promise<boolean>} A Promise that resolves to the isAdmin value
+/*
+ Fetches the user's isAdmin value from the Database based on the provided username and password
  */
 export const checkAdmin = async (username, password) => {
   try {
@@ -144,10 +133,8 @@ export const checkAdmin = async (username, password) => {
 };
 
 
-/**
- * Logs out the user by removing their JWT token from local storage and clearing their user data.
- * @param {function} setToken A state setter function to set the JWT token to null.
- * @param {function} setUser A state setter function to set the user data to an empty object.
+/*
+ Logs out the user by removing their JWT token from local storage and clearing their user data.
  */
 export const logout = (setToken, setUser) => {
   localStorage.removeItem("token");

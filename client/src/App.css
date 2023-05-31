@@ -5,3 +5,8 @@
     box-sizing: border-box;
     /* border: 2px solid black; */
   }
+.App{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

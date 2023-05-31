@@ -1,12 +1,15 @@
+.cartContainer{
+  flex: 1;
+  min-height: 65vh;
+}
 .cart-product-container {
     display: flex;
     align-items: center;
     width: 70%;
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px;
     background-color: #f0efef;
     border-radius: 5%;
+    
   }
   
   .cart-product-image {
@@ -26,9 +29,15 @@
     flex-direction: row;
     margin-top: 10px;
   }
-  
-  .singleButton {
-    margin-right: 10px;
+
+  .myCart{
+    margin: 20px;
+    margin-left: 35px;
   }
-  
+  .checkout{
+    margin: 20px;
+  }
+  .description{
+    margin-right: 15px;
+  }
   

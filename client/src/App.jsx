@@ -34,6 +34,7 @@ function App() {
         const cartResponse = await fetch(`${BASE_URL}/cart/${temp_user.id}`);
         console.log("cartResponse", cartResponse);
         const cart = await cartResponse.json();
+        localStorage.setItem("cart", JSON.stringify(cart));
         console.log("cart1", cart)
         setCart(cart);
         console.log("cart2", cart, "user", user)

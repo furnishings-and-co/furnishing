@@ -1,36 +1,42 @@
 import React from 'react';
 import { DisplayPurchased } from '../api/purchased';
-import {useEffect } from 'react';
+import { useEffect } from 'react';
+import '../styles/Profile.css'
 
-const Profile = ({cart, setCart, items, setItems}) => {
-    
+const Profile = ({ cart, setCart, items, setItems }) => {
+
 
   useEffect(() => {
     async function fetchData() {
-      console.log("profilecart.id", cart.id)
-      // Call the addCartToProfile function with the desired cartId
-      const updatedProfile = await DisplayPurchased(cart.id);
-      setItems(updatedProfile)
+      const cartString = window.localStorage.getItem("cart");
+      const cart = JSON.parse(cartString);
+
+      if (cart && cart.id) {
+        console.log("cart id", cart.id);
+        const updatedProfile = await DisplayPurchased(cart.id);
+        setItems(updatedProfile);
+      }
     }
 
     fetchData();
   }, []);
 
   return (
-    <div>
-      <h2>Purchased Items</h2>
+    <div className='profileContainer'>
+      <h2 className='profileTitle'>Purchase History</h2>
       {!items || items.length === 0 ? (
-        <p>You have not purchased any items</p>
+        <p className='profileTitle' >You have not purchased any items</p>
       ) : (
         <ul>
           {items.map((item) => (
-            <li key={item.id}>
-              <img className='image' style={{ height: "400px" }} src={item.picture} alt="" />
-              <p>{item.name}</p>
-              <p>{item.description}</p>
-              <p>${item.price}</p>
-              <p>Quantity: {item.quantity}</p>
-              <p>Purchased At: {item.purchased_at}</p>
+            <li key={item.id} className='single-product-container'>
+              <img className='single-product-image' src={item.picture} alt='' />
+              <div className='single-product-details'>
+                <p className='name'>{item.name}</p>
+                <p className='description'>{item.description}</p>
+                <p className='price'>${item.price}</p>
+                <p className='quantity'>Quantity: {item.quantity}</p>
+              </div>
             </li>
           ))}
         </ul>

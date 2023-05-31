@@ -1,5 +1,7 @@
 .section {
     display: flex;
+    flex: 1;
+    min-height: 65vh;
   }
   
   .left {
@@ -36,7 +38,6 @@
 .category:hover{
     cursor: pointer;
     color: rgba(0, 0, 0, 0.429);
-    text-decoration: underline;
 }
 .product-container {
     display: flex;

@@ -48,10 +48,6 @@ const AllProducts = ({ setCart }) => {
                   <div className='price-button-container'>
                     <p className='price'>${product.price}</p>
                     <div className='button-container'>
-                      <button className='aButton' onClick={() => {
-                        const updatedCart = addProductToCart(product.id)
-                        setCart(updatedCart)
-                      }}>Add to cart</button>
                       <button className='aButton' onClick={() => navigate(`/products/single/${product.id}`)}>View Product</button>
                     </div>
                   </div>

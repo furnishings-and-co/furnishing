@@ -2,6 +2,7 @@
     margin: 0;
     overflow-x: hidden;
     width: 100%;
+    min-height: 100vh;
   }
   
   .footer {
@@ -37,9 +38,4 @@
   .footer .row ul li {
     display: inline-block;
     margin: 0px 30px;
-  }
-  
-  .footer .row a i {
-    font-size: 2em;
-    margin: 0% 1%;
   }

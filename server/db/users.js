@@ -16,7 +16,7 @@ async function createUser(username, password, isAdmin) {
       VALUES ($1, $2, $3)
       RETURNING id, username, "isAdmin";
     `;
-    const values = [username, hashedPassword, isAdmin];
+    const values = [username, hashedPassword, isAdmin?isAdmin:false];
     const result = await client.query(query, values);
 
     const user = result.rows[0];

@@ -1,28 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { deleteProductFromCart, clearCart } from '../api/cart';
-import { useState, useEffect } from 'react';
 import { addCartToProfile } from '../api/purchased';
+import '../styles/Cart.css';
 
-const Cart = ({cart, setCart, items, setItems}) => {
-    // useEffect(() => {
-    //   async function getCart() {
-    //     const cart = await DisplayCart()
-    //     setCart(cart)
-    //   }
-    //   getCart();
-    // }, [])
+const Cart = ({ cart, setCart, items, setItems }) => {
 
-    return (
-      <div>
-      <h2>My products:</h2>
+  return (
+    <div className='cartContainer'>
+      <h2 className='myCart'>My Cart</h2>
       {cart.products?.map((product) => {
         return (
-          <div key={product.id} className="single-product-container">
-            <img className="single-product-image" src={product.picture} alt="" />
-            <div className="single-product-details">
-              <p>{product.name}</p>
-              <p>{product.quantity}</p>
-              <p>{product.price}</p>
+          <div key={product.id} className="cart-product-container">
+            <img className="cart-product-image" src={product.picture} alt="" />
+            <div className="cart-product-details">
+              <p className='name'>{product.name}</p>
+              <p className='description'>{product.description}</p>
+              <p className='quantity'> Quantity: {product.quantity}</p>
+              <p className='price'>${product.price}</p>
               <button
                 onClick={async () => {
                   const updatedCart = await deleteProductFromCart(product.id);
@@ -36,39 +30,19 @@ const Cart = ({cart, setCart, items, setItems}) => {
         );
       })}
       <button
+        className='checkout'
         onClick={async () => {
           console.log(cart.id);
           const newCart = await addCartToProfile(cart.id);
           setItems(newCart);
-          // const clear = await clearCart();
-          // setCart(clear);
+          const clear = await clearCart();
+          setCart(clear);
         }}
       >
-        PURCHASE CART
+        CHECKOUT
       </button>
     </div>
-    );}
-//     if(cart){
-//     return (
-//         <div>
-//              {cart.map((product) => {
-//           return (
-//             <div key={product.id}>
-//               <img style={{ height: "400px", }} src={product.picture} alt="" />
-//               <p>{product.name}</p>
-//               <p>Description: {product.description}</p>
-//               <p>${product.price}</p>
-//               {/* <button onClick={() => onClick(addProductToCart(product.id))}>Add To Cart</button> */}
-//             </div>
-//           );
-//         })}
-//         </div>
-//     );}
-//     else{
-//         return(
-//             <div>Nothing in Cart</div>
-//         )
-//     }
-// };
+  );
+};
 
 export default Cart;

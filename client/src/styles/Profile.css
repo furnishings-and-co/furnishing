@@ -1,6 +1,9 @@
-.single-product-section{
+.profileContainer{
   flex: 1;
   min-height: 65vh;
+}
+.profileTitle{
+  text-align: center;
 }
 .single-product-container {
     display: flex;
@@ -22,25 +25,4 @@
   
   .single-product-details {
     margin-left: 20px;
-  }
-  .buttonContainer{
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-  }
-  .singleButton{
-    margin-right: 10px;
-  }
-  .singleButton:hover{
-    cursor: pointer;
-  }
-  .backButton{
-    margin: 20px;
-    border: none;
-    cursor: pointer;
-    background-color: white;
-  }
-  .backButton:hover{
-    font-weight: bold;
-    background-color: white;
   }

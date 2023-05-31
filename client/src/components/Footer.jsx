@@ -2,10 +2,9 @@ import React from "react";
 import '../styles/Footer.css'
 
 const Footer = () => {
+  
   return (
     <div className="footer">
-   
-
       <div className="row">
         <ul>
           <li>
@@ -20,7 +19,6 @@ const Footer = () => {
           <li>
             <a href="https://github.com/jeremiahhuynh"target="__blank">Jeremiah Huynh</a>
           </li>
-        
         </ul>
       </div>
     </div>

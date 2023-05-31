@@ -12,9 +12,6 @@ async function createProduct({ name, description, price, picture, category }) {
     const result = await client.query(query, values);
     const createdProduct = result.rows[0];
 
-    
-
-    console.log('Product created:', createdProduct);
     return createdProduct;
   } catch (error) {
     console.error('Error creating product:', error);
@@ -27,7 +24,6 @@ async function getAllProducts(){
     const { rows } = await client.query(`
       SELECT * FROM products
     `);
-console.log("hello", rows);
     return rows;
   } catch (error) {
     console.log(error);
@@ -40,7 +36,6 @@ async function getProductsById(id) {
       SELECT * FROM products
       WHERE id = $1
     `, [id]);
-  console.log(product, "product")
     return product;
   } catch (error) {
     console.log("not working")
@@ -57,7 +52,7 @@ async function getProductsByCategory(category){
       );
       return products;
     } catch (error) {
-      
+      console.log(error)
     }
 }
 
@@ -83,7 +78,7 @@ async function editProduct(
     const result = await client.query(query, values);
     const updatedProduct = result.rows[0];
 
-    console.log("Product updated:", updatedProduct);
+    
     return updatedProduct;
   } catch (error) {
     console.error("Error editing product:", error);
@@ -99,8 +94,6 @@ async function removeProduct(productId) {
 
     const result = await client.query(query, values);
     const removedProductId = result.rows[0].id;
-
-    console.log("Product removed:", removedProductId);
     return removedProductId;
   } catch (error) {
     console.error("Error removing product:", error);

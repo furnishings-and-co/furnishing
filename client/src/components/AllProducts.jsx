@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { DisplayProducts } from '../api/products';
 import { useEffect } from 'react';
 import "../styles/Products.css";
-import { productsToMap } from '../api/data';
 import { useNavigate } from 'react-router-dom';
 import { addProductToCart } from '../api/cart';
 import { checkAdmin } from '../api/users';
 import AddProduct from './AddProduct';
 
-const AllProducts = ({ cart, setCart, admin, setAdmin }) => {
+const AllProducts = ({ setCart, admin, setAdmin }) => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [products, setProducts] = useState([]);

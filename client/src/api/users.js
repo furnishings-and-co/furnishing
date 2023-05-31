@@ -1,7 +1,6 @@
-const BASE_URL= "http://localhost:8080/api";
+const BASE_URL = "http://localhost:8080/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 /*
 Registers a new user with the API.
@@ -19,7 +18,6 @@ export const registerUser = async (username, password) => {
       }),
     });
     const result = await response.json();
-    console.log(response, username, password);
     if (result.token) {
       toast.success(`Welcome to Furnishings & Co ${username}!`, {
         position: "bottom-center",
@@ -43,7 +41,6 @@ export const registerUser = async (username, password) => {
   }
 };
 
-
 /*
 Logs in an existing user with the API.
  */
@@ -60,7 +57,6 @@ export const loginUser = async (username, password) => {
       }),
     });
     const result = await response.json();
-
 
     if (result.token) {
       toast.success(`Welcome back to Furnishings & Co ${username}!`, {
@@ -85,7 +81,6 @@ export const loginUser = async (username, password) => {
   }
 };
 
-
 /*
  Fetches the details of the currently logged-in user from the API.
  */
@@ -98,7 +93,6 @@ export const fetchMe = async (token) => {
       },
     });
     const result = await response.json();
-    console.log(result);
     return result;
   } catch (err) {
     console.error(err);
@@ -109,26 +103,24 @@ export const fetchMe = async (token) => {
  Fetches the user's isAdmin value from the Database based on the provided username and password
  */
 export const checkAdmin = async () => {
-  const token = window.localStorage.getItem('token');
-  console.log("token in cart api front", token)
+  const token = window.localStorage.getItem("token");
   if (!token) {
     return;
   }
   try {
     const response = await fetch(`${BASE_URL}/users/admin`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
 
     if (!response.ok) {
-      throw new Error('Error fetching isAdmin value');
+      throw new Error("Error fetching isAdmin value");
     }
 
     const isAdmin = await response.json();
-    
 
     return isAdmin;
   } catch (error) {
@@ -136,7 +128,6 @@ export const checkAdmin = async () => {
     throw error;
   }
 };
-
 
 /*
  Logs out the user by removing their JWT token from local storage and clearing their user data.

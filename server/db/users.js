@@ -3,7 +3,6 @@ const client = require("./client");
 const jwt = require("jsonwebtoken");
 const {JWT_SECRET}=process.env;
 const bcrypt = require("bcrypt");
-const { createProduct, removeProduct, editProduct } = require("./products");
 const SALT_COUNT = 10;
 
 
@@ -20,7 +19,7 @@ async function createUser(username, password, isAdmin) {
     const result = await client.query(query, values);
 
     const user = result.rows[0];
-    console.log("JWT Secret 1" , JWT_SECRET)
+    
     
     // Generate JWT token
     if(JWT_SECRET){
@@ -102,7 +101,6 @@ async function getUserByUsername(userName) {
 }
 
 const getUserByToken = async(token) => {
-console.log("JWTSECRET", JWT_SECRET)
  try{
   const payload = await jwt.verify(token, JWT_SECRET);
   const SQL = `
@@ -110,7 +108,7 @@ console.log("JWTSECRET", JWT_SECRET)
     FROM users
     WHERE id = $1 
   `;
-  console.log("payload", payload)
+
   const response = await client.query(SQL, [ payload.userId]);
   if(!response.rows.length){
     const error = Error('not authorized');
@@ -138,10 +136,8 @@ async function checkAdminByToken(token) {
     const users = response.rows;
 
     if (user.isAdmin === true) {
-      console.log("User is an admin");
       return true; // User is an admin
     } else {
-      console.log("User is not an admin");
       return false; // User is not an admin
     }
   } catch (error) {

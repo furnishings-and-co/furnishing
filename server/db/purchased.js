@@ -7,7 +7,6 @@ async function getAllPurchased(cartId){
       LEFT JOIN products ON purchased_items."productId" = products."id"
       WHERE purchased_items."cartId" = $1
         `, [cartId]);
-  console.log("purchaseproducts", rows);
       return rows;
     } catch (error) {
       console.log(error);

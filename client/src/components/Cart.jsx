@@ -3,7 +3,7 @@ import { deleteProductFromCart, clearCart } from '../api/cart';
 import { addCartToProfile } from '../api/purchased';
 import '../styles/Cart.css';
 
-const Cart = ({ cart, setCart, items, setItems }) => {
+const Cart = ({ cart, setCart, setItems }) => {
 
   return (
     <div className='cartContainer'>
@@ -32,7 +32,6 @@ const Cart = ({ cart, setCart, items, setItems }) => {
       <button
         className='checkout'
         onClick={async () => {
-          console.log(cart.id);
           const newCart = await addCartToProfile(cart.id);
           setItems(newCart);
           const clear = await clearCart();

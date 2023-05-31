@@ -76,12 +76,8 @@ async function createInitialUsers() {
       { username: "glamgal", password: "glamgal123", isAdmin: false },
       { username: "admin", password: "admin123", isAdmin: true }
     ]
-    console.log("hi")
     const users = await Promise.all(usersToCreate.map(user => createUser(user.username, user.password, user.isAdmin)));
-    console.log("users", users)
-    
-    console.log("Users created:")
-    console.log(users)
+  
     console.log("Finished creating users!")
   } catch (error) {
     console.error("Error creating users!")
@@ -161,10 +157,6 @@ async function createInitialProducts() {
       }
     ]
     const products = await Promise.all(productsToCreate.map(createProduct))
-
-    console.log("products created:")
-    console.log(products)
-
     console.log("Finished creating products")
   } catch (error) {
     console.error("Error creating products")

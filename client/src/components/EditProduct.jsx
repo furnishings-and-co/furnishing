@@ -24,11 +24,8 @@ const EditProduct = ({
         updatedPicture,
         updatedCategory
       );
-
-      console.log("Product updated:", updatedProduct);
     } catch (error) {
       console.error("Error:", error);
-      // Handle error
     }
   };
 

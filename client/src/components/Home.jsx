@@ -1,5 +1,4 @@
 import React from 'react';
-const BASE_URL= "http://localhost:8080/api";
 import '../styles/Home.css'
 import { useNavigate } from 'react-router-dom';
 

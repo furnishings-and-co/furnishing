@@ -67,7 +67,6 @@ const deleteProductFromCart = async ({ cartId, productId }) => {
 const addCartToHistory = async ({cartId}) => {
   try {
     // Insert products from cart_products into purchased_items
-    console.log("cartId in funciton", cartId)
     const result = await client.query(`
       INSERT INTO purchased_items ("cartId", "productId", quantity)
       SELECT "cartId", "productId", quantity
@@ -75,9 +74,7 @@ const addCartToHistory = async ({cartId}) => {
       WHERE "cartId" = $1
       RETURNING *
     `, [cartId]);
-    // console.log("history cart", result)
 
-    console.log(`Added ${result.rowCount} products to purchased_items.`);
   } catch (error) {
     console.error('Error adding products to purchased_items:', error);
   }

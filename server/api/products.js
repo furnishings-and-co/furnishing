@@ -33,6 +33,7 @@ productRouter.get("/:category", async (req, res, next) => {
 
   productRouter.get("/single/:id", async (req, res, next) => {
     const { id } = req.params;
+    console.log("products js 36", id)
     try {
       const singleProduct = await getProductsById(id);
       res.send(singleProduct);

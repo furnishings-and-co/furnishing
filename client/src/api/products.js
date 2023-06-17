@@ -17,6 +17,7 @@ export async function DisplayProducts() {
 
 export async function GetProduct(id) {
   try {
+    console.log(id)
     const response = await fetch(`${BASE_URL}/products/single/${id}`, {
       headers: {
         "Content-Type": "application/json",

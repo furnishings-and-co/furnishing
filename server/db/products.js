@@ -1,11 +1,8 @@
-const client = require('./client')
+const client = require('./client');
 
 
 async function createProduct({ name, description, price, picture, category }) {
   try {
-
-    await client.connect();
-
     const query = 'INSERT INTO products (name, description, price, picture, category) VALUES ($1, $2, $3, $4, $5) RETURNING *';
     const values = [name, description, price, picture, category];
 

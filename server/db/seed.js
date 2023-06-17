@@ -178,9 +178,13 @@ const rebuildDB = async () => {
     console.error('Error during rebuildDB', error);
     throw error;
   } finally {
-    async()=>{
+ try{
     await client.end();
+    return;
     console.log("Database has been rebuilt, and you're good to go!");}
+  catch(error){
+    console.log(error)
+  }
   }
 };
 rebuildDB()

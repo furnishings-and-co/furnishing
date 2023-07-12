@@ -1,4 +1,5 @@
-const BASE_URL = "http://localhost:8080/api";
+
+const BASE_URL = "https://still-tree-1700.fly.dev/api";
 
 export async function DisplayProducts() {
   try {
@@ -15,7 +16,7 @@ export async function DisplayProducts() {
   }
 }
 
-export async function GetProduct(id) {
+export async function getProduct(id) {
   try {
     const response = await fetch(`${BASE_URL}/products/single/${id}`, {
       headers: {

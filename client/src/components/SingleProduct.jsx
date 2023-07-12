@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GetProduct, deleteProduct } from '../api/products';
+import { getProduct, deleteProduct } from '../api/products';
 import { addProductToCart } from '../api/cart';
 import { checkAdmin } from '../api/users';
 import '../styles/singleProduct.css'
@@ -20,7 +20,7 @@ const SingleProduct = ({ setCart, admin, setAdmin }) => {
   }, []);
   useEffect(() => {
     async function getSingleProduct() {
-      const product = await GetProduct(id)
+      const product = await getProduct(id)
       setProduct(product)
     }
     getSingleProduct()

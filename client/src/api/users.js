@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/api";
+const BASE_URL = "https://still-tree-1700.fly.dev/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

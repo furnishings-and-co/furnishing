@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/api";
+const BASE_URL = "https://still-tree-1700.fly.dev/api";
 
 export async function addCartToProfile(cartId) {
   const token = window.localStorage.getItem("token");

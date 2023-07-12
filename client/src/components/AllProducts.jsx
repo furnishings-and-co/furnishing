@@ -65,8 +65,8 @@ useAdmin()
       <div>
         {filteredProducts.map((product) => {
           return (
-            <div className='right'>
-              <div key={product.id} className='product-container'>
+            <div key={product.id} className='right'>
+              <div  className='product-container'>
                 <img className='image' style={{ height: "400px" }} src={product.picture} alt="" />
                 <div className='info-container'>
                   <p className='name'>{product.name}</p>
@@ -99,8 +99,8 @@ useAdmin()
         <div>
           {filteredProducts.map((product) => {
             return (
-              <div className='right'>
-                <div key={product.id} className='product-container'>
+              <div key={product.id} className='right'>
+                <div  className='product-container'>
                   <img className='image' style={{ height: "400px" }} src={product.picture} alt="" />
                   <div className='info-container'>
                     <p className='name'>{product.name}</p>
